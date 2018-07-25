@@ -1,9 +1,9 @@
-WeekIT
+Certificados
 =======================
 
 Instrodução
 ------------
-Aplicação de gerenciamento do WeekIT - Semana de tecnologia da informação do IFBA
+Aplicação de gerenciamento de certificados
 
 
 Instalação 
