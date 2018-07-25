@@ -1,0 +1,115 @@
+<?php
+/** @var  $modelo \Application\Entity\ModeloCertificado */
+ $form = $this->form;
+ $modelo = $this->modelo;
+?>
+<style>
+    table span{
+        background: transparent;
+    }
+
+    table input[type=text]{
+        width: 230px;
+    }
+</style>
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-certificate font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Editar modelo de certificado
+			</span> <span class="caption-helper"></span>
+        </div>
+        <div class="actions">
+            <a class="btn  btn-icon-only btn-default fullscreen"
+               href="javascript:;" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body" style="height: auto;">
+
+        <?php echo $this->partial('partial/messages');?>
+        <?php echo $this->partial('modelo/tabela_tags_certificado');?>
+
+        <?php $form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $form->prepare(); ?>
+
+        <?php echo $this->form()->openTag($form); ?>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/hidden', array(
+            'element' => $form->get('id')
+        ));
+        ?>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('nome'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/textarea', array(
+            'element' => $form->get('texto'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <div id="container-bg-frente" style="width: 60%; display: block; margin: auto;">
+            <h2 style="font-weight: bold; font-size: 20px; ">Frente</h2>
+            <img id="img-bg-frente" src="/assets/certificados/frente/<?php echo $modelo->getBgFrente(); ?>" style=" width: 100%;height: auto; margin: auto; display: block;"/>
+        </div>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/file', array(
+            'element' => $form->get('bgFrente'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+
+        <div id="container-bg-verso" style="width: 60%; display: block; margin: auto;">
+            <h2 style="font-weight: bold; font-size: 20px; ">Verso</h2>
+            <img id="img-bg-verso" src="/assets/certificados/verso/<?php echo $modelo->getBgVerso(); ?>" style=" width: 100%;height: auto; margin: auto; display: block;"/>
+        </div>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/file', array(
+            'element' => $form->get('bgVerso'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/submit', array(
+            'element' => $form->get('submit'),
+            'edit' => true
+        ));
+        ?>
+
+        <?php echo $this->form()->closeTag($form); ?>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    <?php $this->headScript()->captureStart() ?>
+
+    $(document).ready(function() {
+
+        $('#summernote').summernote({
+            codemirror: { // codemirror options
+                theme: 'monokai'
+            }
+        });
+    });
+
+    <?php $this->headScript()->captureEnd() ?>
+</script>

@@ -1,0 +1,52 @@
+<?php
+/** @var  $evento \Application\Entity\Evento */
+$container = (new \Zend\Session\Container('logado'));
+$evento = $container->offsetGet('evento_selecionado');
+?>
+
+
+
+
+
+<div class="page-sidebar-wrapper">
+	<div class="page-sidebar navbar-collapse collapse" style="margin-top: 12px;">
+		<ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+			<li class="nav-item start ">
+                <a href="<?php echo $this->url('coordenador/default', array('action' => 'dashboard'))?>"
+				class="nav-link nav-toggle"> <i class="icon-home"></i> <span
+					class="title">Dashboard</span>
+			</a></li>
+
+            <li class="nav-item start "><a
+                        href="<?php echo $this->url('coordenador/default', array('action' => 'listar-eventos'))?>"
+                        class="nav-link nav-toggle"> <i class="fa fa-calendar"
+                                                        aria-hidden="true"></i> <span class="title">Meus Eventos</span>
+                </a>
+            </li>
+
+			<li class="nav-item  ">
+                <a href="<?php echo $this->url('participante/default', array('action' => 'listar'))?>"
+				class="nav-link nav-toggle"> <i class="fa fa-user"
+					aria-hidden="true"></i> <span class="title">Participantes</span>
+			</a></li>
+
+
+			<li class="nav-item  "><a
+				href="<?php echo $this->url('funcao/default', array('action' => 'listar'))?>"
+				class="nav-link nav-toggle"> <i class="fa fa-book"
+					aria-hidden="true"></i> <span class="title">Funções</span>
+			</a></li>
+
+            <li class="nav-item  "><a href="<?php echo $this->url('tipo-atividade/default', array('action' => 'listar'))?>" class="nav-link nav-toggle">
+                    <i class="fa fa-cog" aria-hidden="true"></i> <span class="title">Tipo de atividades</span>
+                </a>
+            </li>
+
+
+        </ul>
+		<!-- END SIDEBAR MENU -->
+	</div>
+	<!-- END SIDEBAR -->
+</div>
+
+

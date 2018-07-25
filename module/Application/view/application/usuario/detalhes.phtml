@@ -1,0 +1,56 @@
+<?php
+/** @var  $entity \Application\Entity\Aluno */
+$entity = $this->entity;
+?>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+					<span class="caption-subject font-green bold uppercase">
+                         Usuário: <?php echo $entity->getLogin(); ?>
+                    </span>
+				</div>
+
+				<div class="actions">
+					<a
+						href="<?php  echo $this->url('usuario/default', array('action' => 'editar', 'id' => $entity->getId()));?>"
+						class="btn  yellow-saffron" title="Editar"> <i
+						class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a> <a class="btn  btn-icon-only btn-default fullscreen"
+						href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light" style="padding: 0px;">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Login</td>
+											<td> <?php echo $entity->getLogin(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Email</td>
+											<td> <?php echo $entity->getEmail(); ?> </td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

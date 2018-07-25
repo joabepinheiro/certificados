@@ -1,0 +1,128 @@
+<?php
+/** @var  $entity \Application\Entity\Aluno */
+$entity = $this->entity;
+$notas = $this->notas;
+?>
+
+<style type="text/css">
+.portlet.light {
+	padding: 0 !important;
+	margin-bottom: 0 !important;
+}
+</style>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+					<span class="caption-subject font-green bold uppercase">
+                         Aluno: <?php echo $entity->getNome(); ?>
+                    </span>
+				</div>
+
+				<div class="actions">
+					<a
+						href="<?php  echo $this->url('aluno/default', array('action' => 'editar', 'id' => $entity->getId()));?>"
+						class="btn  yellow-saffron" title="Editar"> <i
+						class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a> <a class="btn  btn-icon-only btn-default fullscreen"
+						href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Login</td>
+											<td> <?php echo $entity->getLogin(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Email</td>
+											<td> <?php echo $entity->getEmail(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Telefone 1</td>
+											<td> <?php echo $entity->getTelefone1(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Telefone 2</td>
+											<td> <?php echo $entity->getTelefone2(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Cadastrado em</td>
+											<td>  <?php echo $entity->getCadastradoEm()->format('d/m/Y') ?> </td>
+										</tr>
+
+										<tr>
+											<td class="sbold">Última atualização</td>
+											<td>  <?php echo $entity->getUltimaAtualizacao()->format('d/m/Y') ?> </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                
+                	<?php foreach ($notas as $nota_curso):  ?>
+                    <div class="col-md-12 col-sm-12">
+						<div class="portlet light">
+							<div class="portlet-title">
+								<div class="caption">
+									<span class="caption-subject font-blue sbold"> Notas do curso:
+										<b><?php echo $nota_curso['curso_nome'] ?></b>
+									</span>
+								</div>
+							</div>
+							<div class="portlet-body">
+
+								<table class="table table-condensed">
+
+									<tr>
+										<th>Código</th>
+										<th>Disciplina</th>
+										<th>Nota</th>
+										<th>Status</th>
+									</tr>
+									<tbody>
+                         		<?php foreach ($nota_curso['notas'] as $nota): ?>
+                         		<tr>
+											<td><?php echo str_pad( $nota['id'], 5, '0', STR_PAD_LEFT ); ?></td>
+
+											<td><?php echo $nota['disciplina_nome'];?></td>
+											<td><?php echo $nota['nota']; ?></td>
+											<td style="width: 130px;"
+												class="
+                         			<?php echo ($nota['resultado'] == 'Aprovado' ? 'font-green-jungle' : ''); ?>
+                         			<?php echo ($nota['resultado'] == 'Cursando' ? 'font-blue-steel' : ''); ?>
+                         			<?php echo ($nota['resultado'] == 'Dependência' ? 'font-grey-cascade' : ''); ?>
+                         			<?php echo ($nota['resultado'] == 'Reprovado' ? 'font-red' : ''); ?>
+                         			<?php echo ($nota['resultado'] == 'Recuperação' ? 'font-yellow' : ''); ?>
+                         			<?php echo ($nota['resultado'] == 'A cursar' ? 'font-grey-cascade' : ''); ?>
+                         			">
+                         			<?php echo $nota['resultado']; ?>
+                         			</td>
+										</tr>
+                         		 <?php endforeach; ?>
+                         		 </tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+                    <?php endforeach; ?>
+                </div>
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

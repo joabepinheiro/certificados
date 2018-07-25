@@ -1,0 +1,73 @@
+<?php
+/** @var  $row \Application\Entity\TipoAtividade */
+/** @var  $evento \Application\Entity\Evento */
+$data = $this->data;
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var  $usuario \Application\Entity\Usuario*/
+$container = new \Zend\Session\Container('logado');
+$usuario = $container->offsetGet('usuario');
+
+
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-cog font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Tipos de atividades </span>
+            <span class="caption-helper"></span>
+		</div>
+        <?php if($usuario['is_administrador']):?>
+		<div class="actions">
+			<a href="<?php echo $this->url('tipo-atividade/default', array('action' => 'cadastrar'))?>"
+				class="btn green border-white sbold"> <i class="fa fa-plus"></i>
+				CADASTRAR TIPO DE ATIVIDADE
+			</a>
+            <a class="btn  btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+        <?php endif; ?>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <table class="table table-hover table-light">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nome</th>
+                    <?php if($usuario['is_administrador']):?>
+					<th></th>
+                    <?php endif; ?>
+				</tr>
+			</thead>
+			<tbody>
+            <?php $x=1; foreach($data as $row):  ?>
+                <tr>
+					<td><?php echo $x++; ?></td>
+					<td><?php echo $row->getNome(); ?></td>
+
+                    <?php if($usuario['is_administrador']):?>
+					<td style="text-align: right; width: 137px;">
+						<div class="clearfix">
+
+                            <a
+								href="<?php  echo $this->url('tipo-atividade/default', array('action' => 'editar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+								class="fa fa-pencil" aria-hidden="true"></i>
+							</a> <a
+								href="<?php  echo $this->url('tipo-atividade/default', array('action' => 'deletar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only red" title="Deletar atividade"
+								onclick="return confirm('Confirmar exclusão de tipo atividade ?');">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</a>
+						</div>
+					</td>
+                    <?php endif; ?>
+				</tr>
+            <?php endforeach; ?>
+        
+		
+		</table>
+	</div>
+</div>

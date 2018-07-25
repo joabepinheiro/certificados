@@ -1,0 +1,9 @@
+2018-02-06T21:08:55-03:00 CRIT (2):  Error Code: 1062 Menssage An exception occurred while executing 'INSERT INTO usuario (email, senha, login, tipo) VALUES (?, ?, ?, ?)' with params ["joabepinheiro@live.com", "e10adc3949ba59abbe56e057f20f883e", "joabepinheiro", "Administrador"]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'joabepinheiro@live.com' for key 'email'
+2018-02-06T21:09:44-03:00 CRIT (2):  Error Code: 1062 Menssage An exception occurred while executing 'INSERT INTO usuario (email, senha, login, tipo) VALUES (?, ?, ?, ?)' with params ["joabepinheiro@live.com", "e10adc3949ba59abbe56e057f20f883e", "joabepinheiro", "Administrador"]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'joabepinheiro@live.com' for key 'email'
+2018-02-06T22:17:29-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [4]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `atividade_ibfk_1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`))

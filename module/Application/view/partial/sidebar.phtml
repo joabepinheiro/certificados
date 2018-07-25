@@ -1,0 +1,18 @@
+<?php
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var  $usuario \Application\Entity\Usuario*/
+$container = new \Zend\Session\Container('logado');
+$usuario = $container->offsetGet('usuario');
+
+if ($usuario['tipo'] == 'participante') {
+    echo $this->partial('partial/participante/sidebar');
+} elseif ($usuario['tipo'] == 'Administrador') {
+    echo $this->partial('partial/administrador/sidebar');
+} elseif ($usuario['tipo'] == 'Coordenador do Evento') {
+    echo $this->partial('partial/coordenador/sidebar');
+}
+
+?>
+
+
+

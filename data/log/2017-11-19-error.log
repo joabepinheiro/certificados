@@ -1,0 +1,7 @@
+2017-11-19T20:54:03-03:00 CRIT (2):  Error Code: 0 Menssage DateTime::__construct(): Failed to parse time string (9-29-9--20) at position 0 (9): Unexpected character
+2017-11-19T22:10:01-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [4]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2017-11-19T23:39:50-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM funcao WHERE id = ?' with params [1]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`participacao`, CONSTRAINT `fk_participacao_funcao1` FOREIGN KEY (`funcao_id`) REFERENCES `funcao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)

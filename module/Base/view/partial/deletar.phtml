@@ -1,0 +1,101 @@
+<?php /* @var $this \Zend\View\Renderer\PhpRenderer */?>
+<?php
+$form = $this->form;
+$row = $this->row;
+$rote = $this->rote;
+$maps = array();
+
+/** @var  $value Doctrine\ORM\PersistentCollection */
+foreach ($row->toArray() as $value) {
+    if (is_object($value) && is_a($value, 'Doctrine\ORM\PersistentCollection') && $value->getMapping()['isCascadeRemove'] && $value->count() > 0) {
+        array_push($maps, $value);
+    }
+}
+
+$form->setAttribute('action', $this->url($rote, array(
+    'action' => 'deletar',
+    'id' => $row->getId()
+)));
+$form->prepare();
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-check-square-o font-red-sunglo"></i> <span
+				class="caption-subject font-red-sunglo bold uppercase"> Excluir
+				registro </span>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto; padding-top: 0;">
+
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">×</button>
+			<h4>
+				<i class="icon fa fa-trash"></i> Deseja deletar <?php echo $row;?> ?</h4>
+			<b>Atenção</b> ao clicar em deletar o registro será removido
+			juntamente com todos os registros a ele vinculados. Essa operação é
+			irreversivel.
+		</div>
+
+
+		<form role="form" name="<?php echo $form->getName()?>"
+			method="<?php echo $form->getAttribute('method'); ?>">
+            <?php
+            echo $this->partial('partial/form/general/quick/element/' . $form->get('id')
+                ->getAttribute('type'), array(
+                'element' => $form->get('id')
+            ));
+            
+            echo $this->formElement($form->get('csrf'));
+            ?>
+            <?php foreach($maps as $map): ?>
+                <div class="portlet light" style="padding: 0px;">
+				<div class="portlet-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Todos os registros <span class="text-danger"><?php echo $map[0]->verbose_name_plural;?></span>
+									abaixo serão removidos
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+                            <?php foreach($map as $row): ?>
+                                <tr>
+								<td><?php echo $row?></td>
+							</tr>
+                            <?php endforeach; ?>
+                        
+					
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+
+            <?php endforeach; ?>
+
+            <table style="width: 100%;">
+				<tr>
+					<td style="text-align: left;">
+						<button type="submit" class="btn" name='result' value="nao">Cancelar</button>
+					</td>
+					<td style="text-align: right;">
+						<button type="submit" class="btn btn-danger" name='result'
+							onclick="return alert('Confirmar exclusão ?');" value="sim"
+							title="Ao clicar em deletar o registro será deletado permanentemente e não poderá ser recuperado">Deletar</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+	</div>
+</div>
+
+
+
+
+

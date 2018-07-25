@@ -1,0 +1,98 @@
+<?php
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var  $usuario \Application\Entity\Usuario*/
+/** @var  $row \Application\Entity\Participante */
+$data = $this->data;
+$container = new \Zend\Session\Container('logado');
+$usuario = $container->offsetGet('usuario');
+
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-user font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Participantes</span>
+			<span class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a
+				href="<?php echo $this->url('participante/default', array('action' => 'cadastrar'))?>"
+				class="btn green border-white sbold"> <i class="fa fa-plus"></i>
+				CADASTRAR
+			</a> <a
+				href="<?php echo $this->url('participante/default', array('action' => 'cadastrar-por-planilha'))?>"
+				class="btn green-jungle border-white sbold"> <i
+				class="fa fa-file-excel-o"></i> CADASTRAR POR PLANILHA
+			</a> <a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <table class="table table-hover table-light" id="tabela">
+			<thead>
+				<tr>
+					<th>CPF</th>
+					<th>Nome completo</th>
+					<th>Data de nascimento</th>
+					<th>Email</th>
+					<th>Instituição</th>
+
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php foreach($data as $row): ?>
+                <tr>
+
+					<td>  <?php echo $this->cpf($row->getCpf()); ?></td>
+					<td><?php echo $row->getNomeCompleto(); ?></td>
+					<td><?php echo $row->getDataNascimento()->format('d/m/Y'); ?></td>
+					<td><?php echo $row->getEmail(); ?></td>
+					<td><?php echo $row->getInstituicao(); ?></td>
+
+
+					<td style="text-align: right; width: 137px;">
+						<div class="clearfix">
+
+                            <?php if($usuario['is_administrador']):?>
+                            <a
+								href="<?php  echo $this->url('participante/default', array('action' => 'editar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+								class="fa fa-pencil" aria-hidden="true"></i>
+							</a> <a
+								href="<?php  echo $this->url('participante/default', array('action' => 'deletar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only red" title="Editar"> <i
+								class="fa fa-trash" aria-hidden="true"></i>
+							</a>
+                            <?php endif;?>
+						</div>
+					</td>
+				</tr>
+            <?php endforeach; ?>
+        
+		
+		</table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+    <?php $this->headScript()->captureStart() ?>
+    $(document).ready( function () {
+        $('#tabela').DataTable( {
+            "order": [[ 0, "asc" ]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            }
+        });
+    });
+
+    <?php $this->headScript()->captureEnd() ?>
+
+</script>

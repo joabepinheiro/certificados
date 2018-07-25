@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"
+	rel="stylesheet" />
+
+<style type="text/css">
+html {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	font-size: 10pt;
+}
+
+#bg-imagem {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	z-index: -1;
+	margin: 0;
+	padding: 0;
+	top: 0;
+}
+
+#texto {
+	font-size: 1.7em;
+	display: block;
+	position: absolute;
+	z-index: 2;
+	top: 80mm;
+	padding: 0 15mm 0;
+	margin: 0;
+	text-align: justify !important;
+}
+
+#texto p{
+    text-align: justify !important;
+}
+
+#registro {
+	display: block;
+	position: absolute;
+	z-index: 2;
+	top: 192mm;
+	margin: 0;
+	text-align: right;
+	right: 15mm;
+}
+
+#link-validar {
+	display: block;
+	position: absolute;
+	z-index: 2;
+	top: 198mm;
+	margin: 0;
+	text-align: right;
+	right: 15mm;
+}
+
+#link-validar a {
+	text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+	<img src="<?php echo $this->fundo; ?>" id="bg-imagem" />
+
+	<div id="texto">
+        <?php echo $modelo['texto_frente'];?>
+    </div>
+
+	<div id="registro">
+		Número de registro: <b><?php echo $this->certificadoFormat($participacao->getChaveValidacao()); ?></b>
+	</div>
+
+	<div id="link-validar">
+		<a href="http://certificados.ifba.edu.br/validar" target="_blank">http://certificados.ifba.edu.br/validar</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+2017-10-16T11:20:05-03:00 CRIT (2):  Error Code: 0 Menssage Expected value of type "Application\Entity\Evento" for association field "Application\Entity\Atividade#$evento", got "string" instead.

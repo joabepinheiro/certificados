@@ -1,0 +1,94 @@
+<?php
+$container = new \Zend\Session\Container('logado');
+
+if ($container->offsetExists('usuario')) {
+    $usuario = $container->offsetGet('usuario');
+}
+?>
+
+<div class="page-header navbar">
+	<!-- BEGIN HEADER INNER -->
+	<div class="page-header-inner ">
+		<!-- BEGIN LOGO -->
+		<div class="page-logo">
+			<a href="/"> <img src="/assets/layouts/layout4/img/logo-layout.png"
+				alt="logo" class="logo-default" style="margin: 0px;" />
+			</a>
+			<div class="menu-toggler sidebar-toggler">
+				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+			</div>
+		</div>
+		<!-- END LOGO -->
+		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+		<a href="javascript:;" class="menu-toggler responsive-toggler"
+			data-toggle="collapse" data-target=".navbar-collapse"> </a>
+		<!-- END RESPONSIVE MENU TOGGLER -->
+		<!-- BEGIN PAGE ACTIONS -->
+		<!-- DOC: Remove "hide" class to enable the page header actions -->
+		<div class="page-actions">
+			<!-- <div class="btn-group">
+                <button type="button" class="btn red-haze btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <span class="hidden-sm hidden-xs">Actions&nbsp;</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-docs"></i> New Post </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-tag"></i> New Comment </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-share"></i> Share </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-flag"></i> Comments
+                            <span class="badge badge-success">4</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-users"></i> Feedbacks
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>-->
+		</div>
+		<!-- END PAGE ACTIONS -->
+		<!-- BEGIN PAGE TOP -->
+		<div class="page-top"">
+			<!-- BEGIN HEADER SEARCH BOX -->
+
+			<!-- BEGIN TOP NAVIGATION MENU -->
+			<div class="top-menu"
+				style="margin-top: 7px;>
+
+                <nav 
+				class="nav navbar-nav pull-right">
+				<span class="navbar-text hidden-xs sbold"> <span
+					class="glyphicon glyphicon-user" style="padding: 0 10px;"></span>
+
+                            <?php if(isset($usuario['login'])): ?>
+                            <?php echo $usuario['login']; ?>
+                            <?php elseif (isset($usuario['nome_completo'])): ?>
+                                <?php echo $usuario['nome_completo']; ?>
+                            <?php endif; ?>
+                        </span> <a title="Sair"
+					href="<?php  echo $this->url('logout'); ?>"
+					class="btn btn-link navbar-btn btn-logout font-red-flamingo"> <span
+					class="glyphicon glyphicon-off"></span>
+				</a>
+
+			</div>
+			<!-- END TOP NAVIGATION MENU -- +>
+        </div>
+        <!-- END PAGE TOP -->
+		</div>
+		<!-- END HEADER INNER -->
+	</div>

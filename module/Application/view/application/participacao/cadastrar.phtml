@@ -1,0 +1,541 @@
+<?php
+/** @var  $row \Application\Entity\Participante */
+/** @var  $evento \Application\Entity\Evento */
+/** @var  $participantes_data \Application\Entity\Participacao */
+/** @var  $nao_participantes_data \Application\Entity\Participante */
+$data = $this->data;
+$evento = $this->evento;
+$form = $this->form;
+$participantes_data = $this->participantes_data;
+$todos_participantes_data = $this->todos_participantes_data;
+?>
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Adicionar participação</span>
+            <span class="caption-helper"></span>
+		</div>
+
+		<div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+			<a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+
+        <?php echo $this->partial('evento/table/detalhes', array(
+                'evento' => $evento
+        ));?>
+
+        <?php echo $this->partial('partial/messages');?>
+
+        <input type="hidden" id="evento_id" value="<?php echo $evento->getId(); ?>" />
+
+        <?php $form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $form->prepare(); ?>
+
+        <?php echo $this->form()->openTag($form); ?>
+
+        <?php
+
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('tipo_atividade'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <?php
+        
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('atividade_id'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <?php
+        
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('funcao_id'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <?php
+
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('carga_horaria'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <div class="form-group <?php if($this->formElementErrors($form->get('qtd_bolsista'))) echo " has-error";   ?>" id="qtd_bolsista_container" style="display: none;">
+            <label
+                    class="col-md-2 control-label ">
+                <?php echo $form->get('qtd_bolsista')->getLabel();?>
+            </label>
+            <div class="col-md-9">
+                <?php $form->get('qtd_bolsista')->setAttribute('class', 'form-control ' .  $form->get('qtd_bolsista')->getAttribute('class')) ?>
+                <?php echo $this->formElement($form->get('qtd_bolsista')); ?>
+
+                <?php if(!empty($form->get('qtd_bolsista')->getAttribute('description'))): ?>
+                    <span class="help-inline"> <?php echo $form->get('qtd_bolsista')->getAttribute('description'); ?> </span>
+                <?php endif; ?>
+
+                <?php
+
+                echo $this->partial('partial/form/general/quick/message-erros', array(
+                    'element' => $form->get('qtd_bolsista')
+                ))?>
+            </div>
+        </div>
+
+        <?php
+        
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('data_inicio'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        <?php
+        
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('data_fim'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+        </form>
+
+		<div id="cadastrar_atividade" class="modal fade" tabindex="-1"
+			data-width="760" style="position: absolute; top: 10%;">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h4 class="modal-title">Cadastrar atividade</h4>
+			</div>
+
+			<div class="modal-body"></div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn green">Salvar</button>
+			</div>
+		</div>
+
+		<div class="portlet light">
+			<div class="portlet-title" title="Lista de todos os cadastrados no sistema">
+				<div class="caption">
+					<span class="caption-subject font-green bold uppercase"> Todos os cadastrados
+					</span> <span class="caption-helper">(Pressione F4 para adicionar a participação do primeiro cadastrado )</span>
+					<span style="display: none;" id="add-participacao-loading">
+					<img alt="Carregando..." src="/assets/layouts/layout/img/loading.gif">
+					</span>
+				</div>
+
+			</div>
+			<div class="portlet-body" style="height: auto;">
+
+
+                <div id="mensagem">
+                </div>
+
+				<table class="table table-hover table-light" id="nao_participantes_do_evento">
+					<thead>
+						<tr>
+							<th></th>
+							<th>CPF</th>
+							<th>Nome</th>
+							<th>Email</th>
+							<th>Data de nascimento</th>
+						</tr>
+					</thead>
+
+					<tbody>
+                    <?php foreach($todos_participantes_data as $row): ?>
+                        <tr
+							id="participante-<?php echo $row->getId(); ?>"
+							value="<?php echo $row->getId(); ?>" class="participante">
+							<td>
+								<button value="<?php echo $row->getId(); ?>"
+									name="participante_id" id="add_participante" class="btn green add_participante"
+									onclick="add_participante(value);">
+									<i class="fa fa-plus"> </i>
+								</button>
+							</td>
+							<td><?php echo $this->CPF($row->getCpf()); ?></td>
+							<td><?php echo $row->getNomeCompleto(); ?></td>
+							<td><?php echo $row->getEmail(); ?></td>
+							<td><?php echo $row->getDataNascimento()->format('d/m/Y'); ?></td>
+						</tr>
+                    <?php endforeach; ?>
+                    </tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<span class="caption-subject font-green bold uppercase">
+						Participantes selecionados</span> <span class="caption-helper"></span>
+				</div>
+			</div>
+			<div class="portlet-body" style="height: auto;">
+
+
+                <?php echo $this->partial('partial/messages');?>
+
+                <div id="mensagem-selecionados">
+                </div>
+
+                <table class="table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-inline" id="participantes_do_evento">
+					<thead>
+						<tr>
+
+							<th>CPF</th>
+							<th>Nome</th>
+							<th>Atividade</th>
+							<th class="none">Função</th>
+							<th title="Carga Horária da participação">C.H.</th>
+							<th>Início</th>
+							<th>Fim</th>
+                            <th></th>
+							<th></th>
+							<th class="none">Remover participação</th>
+
+						</tr>
+					</thead>
+
+					<tbody>
+                    <?php foreach($participantes_data as $row): ?>
+                        <tr id="participacao-<?php echo $row->getId(); ?>">
+
+							<td><?php echo $this->CPF($row->getParticipante()->getCpf()); ?></td>
+							<td><?php echo $row->getParticipante()->getNomeCompleto(); ?></td>
+							<td><?php echo $row->getAtividade(); ?></td>
+							<td><?php echo $row->getFuncao(); ?></td>
+							<td><?php echo $row->getCargaHoraria(); ?></td>
+							<td><?php echo $row->getDataInicio()->format('d/m/Y'); ?></td>
+							<td><?php echo $row->getDataFim()->format('d/m/Y'); ?></td>
+							<td>
+                                <a href="<?php echo $this->url('certificado/default', array('action' => 'preview', 'participacao' => $row->getId()))?>" class="btn btn-icon-only green" title="Preview" target="_blank">
+									<i class="fa fa-eye" aria-hidden="true"></i>
+							    </a>
+                            </td>
+							<td>
+                                <a href="<?php echo $this->url('certificado/default', array('action' => 'download', 'participacao' => $row->getId()))?>"
+								class="btn btn-icon-only green" title="Download"> <i
+									class="fa fa-download" aria-hidden="true"></i>
+							    </a>
+                            </td>
+                            <td>
+                                <button value="<?php echo $row->getId(); ?>"
+                                        name="participante_id"
+                                        id="remove_participante_<?php echo $row->getId(); ?>"
+                                        class="btn red" onclick="remove_participacao(value);">
+                                    <i class="fa fa-trash"> </i>
+                                </button>
+                            </td>
+						</tr>
+                    <?php endforeach; ?>
+                    </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+<?php $this->headScript()->captureStart() ?>
+    var nao_participantes_do_evento_datatable = $('#nao_participantes_do_evento').DataTable( {
+        "order": [[ 2, "asc" ]],
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+        }
+    });
+
+    var participantes_do_evento_datatable = $('#participantes_do_evento').DataTable( {
+        "order": [[ 1, "asc" ]],
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+        }
+    });
+
+    function validaForm(){
+        var atividade_id    = document.getElementById('atividade_id').value;
+        var funcao_id       = document.getElementById('funcao_id').value;
+        var carga_horaria   = document.getElementById('carga_horaria').value;
+        var data_inicio   = document.getElementById('data_inicio').value;
+        var data_fim   = document.getElementById('data_fim').value;
+
+        if(atividade_id === ''){alert('Informe a atividade');return false;}
+        if(funcao_id === ''){alert('Informe a função');return false;}
+        if(carga_horaria === ''){alert('Informe a carga horária');return false;}
+        if(data_inicio === ''){alert('Informe a data inicial');return false;}
+        if(data_fim === ''){alert('Informe a data final');return false;}
+        if(carga_horaria >  $('#carga_horaria').attr('max')){alert('A carga horária informada é maior do que a carga horária máxima');return false;}
+
+        return true;
+    }
+
+  
+    function add_participante(participante_id){
+        if(!validaForm()){
+            return;
+        }
+
+        //$('#participante-'+ participante_id).hide();
+
+        var tipo_atividade_id =       document.getElementById('tipo_atividade').value;
+        var qtd_bolsista =       document.getElementById('qtd_bolsista').value;
+        var evento_id =       document.getElementById('evento_id').value;
+        var atividade_id    = document.getElementById('atividade_id').value;
+        var funcao_id       = document.getElementById('funcao_id').value;
+        var carga_horaria   = document.getElementById('carga_horaria').value;
+        var data_inicio     = document.getElementById('data_inicio').value;
+            data_inicio = moment(data_inicio, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var data_fim   = document.getElementById('data_fim').value;
+            data_fim = moment(data_fim, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+        $.ajax({
+            url: '/participacao/add-participante',
+            type: 'POST',
+            data: {
+                "tipo_atividade_id"    : tipo_atividade_id,
+                "evento_id"         : evento_id,
+                "carga_horaria"     : carga_horaria,
+                "atividade_id"      : atividade_id,
+                "funcao_id"         : funcao_id,
+                "participante_id"   : participante_id,
+                "data_inicio"       : data_inicio,
+                "data_fim"          : data_fim,
+                "qtd_bolsista"      : qtd_bolsista
+            },
+            beforeSend : function() {
+            	$("#add-participacao-loading").show();
+            },
+            complete: function () {
+            	$("#add-participacao-loading").hide();
+            },
+            success: function (data) {
+                
+            	 if($('.msg-container').size() >= 3){
+                	 $("#mensagem").html("");
+                }
+
+                var html_mensagem = '';
+
+                if(data.status === 201){
+                    $('#participante-'+participante_id).animate(
+                        { "background-color": "#dff0d8" },{
+                            duration: 5000,
+                            specialEasing: {
+                                width: "linear",
+                                height: "easeOutBounce"
+                            },
+                            complete: function() {
+                                $( this ).css("background-color", "#fff")
+                            }
+                        });
+                }
+
+                if(data.status === 412){
+                     html_mensagem =  '<div class="alert alert-block alert-danger msg-container"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button> '+ data.message +'</div>';
+                    $("#mensagem").append(html_mensagem);
+                }
+
+                //nao_participantes_do_evento_datatable.row($('#participante-'+participante_id)).remove().draw();
+
+                for(var i = 0; i < data.data.length; i++){
+                    participantes_do_evento_datatable.row.add(
+                        [  cpf(data.data[i].participante_cpf),
+                            data.data[i].participante_nome_completo,
+                            data.data[i].atividade_titulo ,
+                            data.data[i].funcao_nome_funcao,
+                            data.data[i].participacao_carga_horaria,
+                            moment(data.data[i].participacao_data_inicio.date).format('DD/MM/YYYY'),
+                            moment(data.data[i].participacao_data_fim.date).format('DD/MM/YYYY'),
+
+                            '<a href="/certificado/preview/'+data.data[i].participacao_id+'" class="btn btn-icon-only green" title="Preview" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>',
+                            '<a href="/certificado/download/'+data.data[i].participacao_id+'" class="btn btn-icon-only green" title="Preview" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>',
+                            "<button value='"+data.data[i].participacao_id +"' name='participante_id' class='btn red' onclick='remove_participacao(value);'> <i class='fa fa-trash'> </i> </button>",
+                        ]
+                    ).draw( false ).nodes().to$().attr("id",'participacao-'+data.data[i].participacao_id);
+
+                    html_mensagem =  '<div class="alert alert-block alert-success msg-container">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button> <b>'+ data.data[i].participante_nome_completo +'</b> foi adicionado com sucesso</div>';
+                    $("#mensagem").append(html_mensagem);
+
+                    
+                 
+                }
+
+            },
+            error: function () {
+                alert('Ops algo deu errado');
+            }
+        });
+    }
+
+    function remove_participacao(participacao_id){
+
+        $('#participacao-'+participacao_id).hide();
+
+        $.ajax({
+            url: '/participacao/remove-participacao',
+            type: 'POST',
+            data: {
+                "participacao_id": participacao_id
+            },
+            beforeSend : function() {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                participantes_do_evento_datatable.row($('#participacao-'+ participacao_id)).remove().draw();
+
+                if($('.msg-container').size() >= 3){
+               		$("#mensagem").html("");
+                }
+
+                html_mensagem =  '<div class="alert alert-block alert-warning" id="msg-container">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button> <b>'+ data[0].participante_nome_completo +'</b> teve sua participação em <b>' + data.atividade_titulo + '</b> removida</div>';
+                $("#mensagem-selecionados").append(html_mensagem);
+            },
+            error: function () {
+                alert('Ops algo deu errado');
+                $('#participacao-'+ participacao_id).show();
+            }
+        });
+    }
+
+    $(document).ready(function() {
+
+        $( "#nao_participantes_do_evento_filter input" ).keyup(function( event ) {
+
+            if(event.which === 115){
+                var participante_id = $(".add_participante").first().val();
+                add_participante(participante_id);
+            }
+        });
+
+        $( "#funcao_id" ).change(function() {
+            var funcao_id       = document.getElementById('funcao_id').value;
+            if(funcao_id == 5){
+                $("#qtd_bolsista_container").show();
+            }else{
+                $("#qtd_bolsista_container").hide();
+            }
+        });
+
+        $( "#tipo_atividade" ).change(function() {
+            var tipo_atividade       = document.getElementById('tipo_atividade').value;
+            populateAtividadeDoTipo(tipo_atividade);
+        });
+
+
+        $( "#atividade_id" ).change(function() {
+        	var evento_id       = document.getElementById('evento_id').value;
+            var atividade_id    = document.getElementById('atividade_id').value;
+            populateDadosDaParticipacao(evento_id,  atividade_id);
+        });
+
+        $("#data_inicio").inputmask("d/m/y", {
+            "placeholder": "dd/mm/yyyy"
+        });
+
+        $("#data_fim").inputmask("d/m/y", {
+            "placeholder": "dd/mm/yyyy"
+        });
+    });
+
+
+    function populateDadosDaParticipacao(evento_id, atividade_id){
+
+    	 if(evento_id === ''){alert('Informe o evento');return false;}
+    	 if(atividade_id === ''){alert('Informe a atividade');return false;}
+
+        App.blockUI();
+
+		 $.ajax({
+	            url: '/atividade/detalhes_ajax/'+evento_id+'/'+atividade_id,
+	            type: 'GET',
+	            beforeSend : function() {
+	            },
+	            complete: function () {
+	            },
+	            success: function (data) {
+	            	$('#data_inicio').val(moment(data.data_inicio.date).format('DD/MM/YYYY'));
+	            	$('#data_fim').val(moment(data.data_fim.date).format('DD/MM/YYYY'));
+	            	$('#carga_horaria').val(data.carga_horaria);
+                    $('#carga_horaria').attr('max', data.carga_horaria);
+                    App.unblockUI();
+	            },
+	            error: function () {
+                    App.unblockUI();
+	                alert('Ops algo deu errado');
+	            }
+	        });
+    }
+
+
+    function populateAtividadeDoTipo(tipo_atividade){
+
+        if(tipo_atividade === ''){alert('Informe o tipo da atividade');return false;}
+
+        var evento_id =   document.getElementById('evento_id').value;
+
+        App.blockUI();
+        $.ajax({
+            url: '/tipo-atividade/atividades_ajax/'+ tipo_atividade+'/'+evento_id,
+            type: 'GET',
+            beforeSend : function() {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                var atividade_id = $('#atividade_id');
+                atividade_id.html('');
+                atividade_id.append('<option value="">Selecione uma atividade</option>');
+                $.each(data, function(i, d) {
+                    atividade_id.append('<option value="' + d.id + '">' + d.titulo + '</option>');
+                });
+
+                App.unblockUI();
+            },
+            error: function () {
+                App.blockUI();
+                alert('Ops algo deu errado');
+            }
+        });
+    }
+
+
+function cpf(v) {
+        v = v.replace( /\D/g , ""); //Remove tudo o que não é dígito
+        v = v.replace( /(\d{3})(\d)/ , "$1.$2"); //Coloca um ponto entre o terceiro e o quarto dígitos
+        v = v.replace( /(\d{3})(\d)/ , "$1.$2"); //Coloca um ponto entre o terceiro e o quarto dígitos
+        //de novo (para o segundo bloco de números)
+        v = v.replace( /(\d{3})(\d{1,2})$/ , "$1-$2"); //Coloca um hífen entre o terceiro e o quarto dígitos
+        return v;
+    }
+
+<?php $this->headScript()->captureEnd() ?>
+
+</script>

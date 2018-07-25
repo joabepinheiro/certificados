@@ -1,0 +1,71 @@
+<?php
+/** @var  $entity \Application\Entity\Atividade */
+$entity = $this->entity;
+?>
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+					<span class="caption-subject font-green bold uppercase"> Detalhes da atividade</span>
+				</div>
+
+				<div class="actions">
+					<a href="<?php  echo $this->url('atividade/default', array('action' => 'editar',  'evento' => $entity->getEvento()->getId(), 'id' => $entity->getId()));?>" class="btn  yellow-saffron" title="Editar">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a>
+
+                    <?php echo $this->partial('evento/menu/superior', array(
+                        'evento' => $entity->getEvento()
+                    ));?>
+
+                    <a class="btn  btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+
+                        <?php echo $this->partial('evento/table/detalhes', array(
+                            'evento' =>  $entity->getEvento()
+                        ));?>
+
+						<div class="portlet light"
+							style="padding: 0 !important; margin-bottom: 0 !important;">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Título</td>
+											<td> <?php echo $entity->getTitulo(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Tipo</td>
+											<td> <?php echo $entity->getTipoAtividade()->getNome(); ?> </td>
+										</tr>
+                                        <tr>
+                                            <td class="sbold">Carga horária</td>
+                                            <td> <?php echo $entity->getCargaHoraria(); ?> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sbold">Início</td>
+                                            <td> <?php echo $entity->getDataInicio()->format('d/m/Y'); ?> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sbold">Fim</td>
+                                            <td> <?php echo $entity->getDataFim()->format('d/m/Y'); ?> </td>
+                                        </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

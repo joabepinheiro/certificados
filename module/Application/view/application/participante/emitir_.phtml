@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="pt-BR">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>Certificados Online: Emissão e Validação / IFBA Vitória da Conquista</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="Joabe Pinheiro" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link
+	href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all"
+	rel="stylesheet" type="text/css" />
+<link
+	href="/assets/global/plugins/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="/assets/global/plugins/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="/assets/global/plugins/uniform/css/uniform.default.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="/assets/global/plugins/select2/css/select2.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="/assets/global/plugins/select2/css/select2-bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL STYLES -->
+<link href="/assets/global/css/components.min.css" rel="stylesheet"
+	id="style_components" type="text/css" />
+<link href="/assets/global/css/plugins.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- END THEME GLOBAL STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="/assets/pages/css/login-3.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- END PAGE LEVEL STYLES -->
+<!-- BEGIN THEME LAYOUT STYLES -->
+<!-- END THEME LAYOUT STYLES -->
+<link rel="shortcut icon" href="img/favicon.ico" />
+</head>
+<!-- END HEAD -->
+
+<body class=" login"
+	style="background: #fff !important;">
+
+
+<?php if(!empty($this->participacoes)):?>
+
+    <div style="padding: 20px 0;">
+        <a href="/emitir">
+            <img src="/assets/layouts/layout4/img/logo.png" alt="" class="center-block" />
+        </a>
+    </div>
+
+	<div class="portlet light" style="margin: auto; width: 80%;">
+
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user font-green" aria-hidden="true"></i> <span
+                        class="caption-subject font-green bold uppercase"> Participante</span> <span
+                        class="caption-helper"></span>
+            </div>
+            <div class="actions">
+                <a class="btn  red "
+                   href="/emitir" data-original-title="" title="Sair"> Sair</a>
+            </div>
+        </div>
+
+		<div class="portlet-body" style="height: auto;">
+
+            <table class="table table-bordered table-hover" style="background: #f5f5f5;">
+				<tbody>
+					<tr>
+						<td class="sbold">Nome</td>
+						<td><?php echo $this->partipante->getNomeCompleto(); ?></td>
+                    </tr>
+                    <tr>
+						<td class="sbold">CPF</td>
+						<td><?php echo $this->CPF($this->partipante->getCpf()); ?></td>
+					</tr>
+                    <tr>
+                        <td class="sbold">Data de nascimento</td>
+                        <td><?php echo $this->partipante->getDataNascimento()->format('d/m/Y'); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="sbold">Email</td>
+                        <td><?php echo $this->partipante->getEmail(); ?></td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<?php
+    /** @var  $evento \Application\Entity\Evento */
+    $evento = $this->evento;
+    ?>
+<div class="portlet light" style="margin: auto; width: 80%;">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="fa fa-certificate font-green" aria-hidden="true"></i> <span
+					class="caption-subject font-green bold uppercase"> Participações</span> <span
+					class="caption-helper"></span>
+			</div>
+		</div>
+		<div class="portlet-body" style="height: auto;">
+
+            <?php echo $this->partial('evento/table/detalhes', array(
+                'evento' => $evento
+            ));?>
+
+			<table class="table table-hover table-light" id="sample_1">
+				<thead>
+					<tr>
+                        <th>Tipo da atividade</th>
+                        <th>Atividade</th>
+                        <th>Função</th>
+						<th>Carga horária</th>
+						<th ></th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+            <?php
+    /** @var  $participacao \Application\Entity\Participacao */
+    ?>
+            <?php foreach($this->participacoes as $participacao): ?>
+                <tr>
+                        <td><?php echo $participacao->getAtividade()->getTipoAtividade(); ?></td>
+                        <td title="<?php echo $participacao->getAtividade()->getTipoAtividade(); ?>"><?php echo $participacao->getAtividade(); ?></td>
+                        <td><?php echo $participacao->getFuncao(); ?></td>
+						<td><?php echo $participacao->getCargaHoraria(); ?> <?php echo ($participacao->getCargaHoraria() > 1) ? 'horas' : 'hora'; ?></td>
+						<td style="width: 120px;"><a href="/baixar-certificado/<?php echo $participacao->getId() ?>/<?php echo $this->form->get('csrf')->getValue(); ?>" class="btn green" title="Clique aqui para emitir seu certificado">
+                                <i class="fa fa-download" aria-hidden="true"></i> Emitir
+                            </a>
+                        </td>
+
+                        <td style="width: 120px;">
+                            <button id="enviar-certificado-email" class="btn green"  value="<?php echo $participacao->getId(); ?>" title="Enviar certificado para o email <?php echo $participacao->getParticipante()->getEmail(); ?>">
+                                <i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar por email
+                            </button>
+
+                        </td>
+					</tr>
+            <?php endforeach; ?>
+        
+			
+			</table>
+		</div>
+	</div>
+<?php else: ?>
+    <!-- BEGIN LOGIN -->
+	<div class="content" style="margin-top: 40px; width: 35%;">
+		<!-- BEGIN LOGO -->
+        <div style="padding: 20px 0; margin-bottom: 10px;">
+            <a href="/emitir">
+                <img src="/assets/layouts/layout4/img/logo.png" alt="" class="center-block" />
+            </a>
+        </div>
+		<!-- END LOGO -->
+
+        <?php if($this->menssages):?>
+            <div
+			class="alert alert-danger alert-bold-border fade in alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+                <?php echo $this->menssages; ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="alert alert-success alert-bold-border fade in alert-dismissable" id="msg-success-container" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-hidden="true">&times;</button>
+            <span id="msg-success"></span>
+        </div>
+
+
+         <div class="alert alert-danger alert-bold-border fade in alert-dismissable" id="msg-error-container" style="display: none;">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span id="msg-error"></span>
+		</div>
+
+		<!-- BEGIN LOGIN FORM -->
+        <?php echo $this->form()->openTag($this->form);?>
+
+        <?php echo $this->partial('partial/messages');?>
+
+        <?php echo $this->formElement($this->form->get('csrf')); ?>
+
+        <div
+			class="form-group <?php if($this->formElementErrors($this->form->get('cpf'))) echo " has-error" ?>">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">CPF</label>
+
+
+            <?php echo $this->formElement($this->form->get('cpf')); ?>
+
+            <?php
+            if ($this->formElementErrors($this->form->get('cpf')))
+                echo $this->formElementErrors()
+                    ->setMessageOpenFormat('<small data-bv-validator="notEmpty" class="help-block" style="">')
+                    ->setMessageSeparatorString('</small><small data-bv-validator="notEmpty" class="help-block" style="">')
+                    ->setMessageCloseString('</small>')
+                    ->render($this->form->get('cpf'));
+            ?>
+
+        </div>
+
+		<div
+			class="form-group <?php if($this->formElementErrors($this->form->get('data_nascimento'))) echo " has-error" ?>">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">Data de
+				nascimento</label>
+
+            <?php echo $this->formElement($this->form->get('data_nascimento')); ?>
+
+            <?php
+    if ($this->formElementErrors($this->form->get('data_nascimento')))
+        echo $this->formElementErrors()
+            ->setMessageOpenFormat('<small data-bv-validator="notEmpty" class="help-block" style="">')
+            ->setMessageSeparatorString('</small><small data-bv-validator="notEmpty" class="help-block" style="">')
+            ->setMessageCloseString('</small>')
+            ->render($this->form->get('data_nascimento'));
+    ?>
+
+        </div>
+
+		<div
+			class="form-group <?php if($this->formElementErrors($this->form->get('evento'))) echo " has-error" ?>">
+			<label class="control-label visible-ie8 visible-ie9">Evento</label>
+
+            <?php echo $this->formElement($this->form->get('evento')); ?>
+
+            <?php
+    if ($this->formElementErrors($this->form->get('evento')))
+        echo $this->formElementErrors()
+            ->setMessageOpenFormat('<small data-bv-validator="notEmpty" class="help-block" style="">')
+            ->setMessageSeparatorString('</small><small data-bv-validator="notEmpty" class="help-block" style="">')
+            ->setMessageCloseString('</small>')
+            ->render($this->form->get('evento'));
+    ?>
+        </div>
+
+		<div class="form-actions" style="border-bottom: 0;">
+			<button type="submit" class="btn red-mint btn-block"
+				id="btn-buscar-certificados" style="padding: 8px 0;">Buscar
+				certificados</button>
+		</div>
+		<!-- END LOGIN FORM -->
+	</div>
+	<!-- END LOGIN -->
+<?php endif; ?>
+
+
+<div class="page-footer">
+		<h5 class="text-center" style="font-weight: 600;">Dúvidas ou problemas
+			? certificados.vdc@ifba.edu.br</h5>
+	</div>
+
+	<!--[if lt IE 9]>
+<script src="/assets/global/plugins/respond.min.js"></script>
+<script src="/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+	<!-- BEGIN CORE PLUGINS -->
+	<script src="/assets/global/plugins/jquery.min.js"
+		type="text/javascript"></script>
+	<script src="/assets/global/plugins/bootstrap/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<script src="/assets/global/plugins/js.cookie.min.js"
+		type="text/javascript"></script>
+	<script
+		src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+		type="text/javascript"></script>
+	<script
+		src="/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+	<script src="/assets/global/plugins/jquery.blockui.min.js"
+		type="text/javascript"></script>
+	<script src="/assets/global/plugins/uniform/jquery.uniform.min.js"
+		type="text/javascript"></script>
+	<script
+		src="/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+		type="text/javascript"></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script
+		src="/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"
+		type="text/javascript"></script>
+	<script
+		src="/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js"
+		type="text/javascript"></script>
+
+	<script
+		src="/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
+		type="text/javascript"></script>
+	<script
+		src="/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
+		type="text/javascript"></script>
+	<script src="/assets/global/plugins/select2/js/select2.full.min.js"
+		type="text/javascript"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN THEME GLOBAL SCRIPTS -->
+	<script src="/assets/global/scripts/app.min.js" type="text/javascript"></script>
+	<!-- END THEME GLOBAL SCRIPTS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="/assets/pages/scripts/login.min.js" type="text/javascript"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<!-- BEGIN THEME LAYOUT SCRIPTS -->
+	<script src="/assets/pages/scripts/form-input-mask.js" type="text/javascript"></script>
+	<!-- END THEME LAYOUT SCRIPTS -->
+
+	<script type="text/javascript">
+
+
+    $( "#enviar-certificado-email" ).click(function() {
+
+         var id =  document.getElementById('enviar-certificado-email').value;
+
+        App.blockUI();
+        $.ajax({
+            url: '/enviar-certificado/'+id+'/<?php echo $this->form->get('csrf')->getValue(); ?>',
+            type: 'GET',
+            beforeSend : function() {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                alert(data.message);
+                App.unblockUI();
+            },
+            error: function () {
+                alert('Ops algo deu errado');
+                App.unblockUI();
+            }
+        });
+    });
+
+
+    $('#evento').hide();
+
+    function listarEventos() {
+        var cpf = document.getElementById('cpf').value;
+        var evento = document.getElementById('evento').value;
+        var data_nascimento = document.getElementById('data_nascimento').value;
+        var data_nascimento_db = data_nascimento.substr(6, 4) + '-' + data_nascimento.substr(3, 2) + '-' + data_nascimento.substr(0, 2);
+
+
+        if(cpf === '' ){
+            alert("Informe o seu CPF");
+            return false;
+        }
+
+        if(data_nascimento === '' ){
+            alert("Informe sua data de nascimento");
+            return false;
+        }
+
+        App.blockUI();
+
+        $('#evento').show();
+
+        $.ajax({
+            url: '/eventos-do-participante/'+cpf+'/'+data_nascimento_db,
+            type: 'GET',
+            beforeSend : function() {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                if(data.length === 0){
+                    $("#msg-error-container").show();
+                    $("#msg-error").text("Você não tem nenhuma participação cadastrada. Verifique se as informações fornecidas estão corretas");
+                    App.unblockUI();
+                }else{
+                	$("#msg-error-container").hide();
+                    $("#msg-error").text("");
+                      
+                    var options = '<option value="">Selecione o evento</option>';
+
+                    for (var x = 0; x < data.length; x++) {
+                        options += '<option value="' + data[x]['id'] + '">' + data[x]['nome'] + '</option>';
+                    }
+                    alert('Selecione o evento que o certificado será emitido')
+                    $('#evento').html(options);
+
+                    App.unblockUI();
+                }
+            },
+            error: function () {
+                alert('Ops algo deu errado');
+                App.unblockUI();
+            }
+        });
+
+    }
+
+    $(window).bind("pageshow", function() {
+        $("#data_nascimento").val("");
+        $("#cpf").val("");
+    });
+
+    $(document).ready(function() {
+
+
+        $("#data_nascimento").inputmask(
+            "d/m/y",{
+                "oncomplete": function(){
+                    listarEventos();
+                }
+            }
+        );
+
+        $("#cpf").inputmask(
+            "999.999.999-99",{
+                "oncomplete": function(){
+                    listarEventos();
+                }
+            }
+        );
+    });
+
+</script>
+</body>
+
+</html>

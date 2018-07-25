@@ -1,0 +1,12 @@
+2017-10-03T08:45:41-03:00 CRIT (2):  Error Code: 1406 Menssage An exception occurred while executing 'INSERT INTO participante (CPF, nome_completo, data_nascimento, email, instituicao) VALUES (?, ?, ?, ?, ?)' with params ["796.595.959-59", "Jose Pereira", "2017-11-12", "joabepinheiro@live.com", "2727"]:
+
+SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'CPF' at row 1
+2017-10-03T08:46:05-03:00 CRIT (2):  Error Code: 1406 Menssage An exception occurred while executing 'INSERT INTO participante (CPF, nome_completo, data_nascimento, email, instituicao) VALUES (?, ?, ?, ?, ?)' with params ["796.595.959-59", "Jose Pereira", "2017-11-12", "joabepinheiro@live.com", "2727"]:
+
+SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'CPF' at row 1
+2017-10-03T10:31:39-03:00 CRIT (2):  Error Code: 1265 Menssage An exception occurred while executing 'INSERT INTO evento (nome, sigla, ano, numero_edicao, data_final, data_inicial, modelo_certificado_frente, modelo_certificado_verso, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)' with params ["Weekt IT", "WI", "2017-12-01", "1", "0000-07-20", "0001-07-20", null, null, 1]:
+
+SQLSTATE[01000]: Warning: 1265 Data truncated for column 'ano' at row 1
+2017-10-03T10:34:12-03:00 CRIT (2):  Error Code: 1265 Menssage An exception occurred while executing 'INSERT INTO evento (nome, sigla, ano, numero_edicao, data_final, data_inicial, modelo_certificado_frente, modelo_certificado_verso, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)' with params ["Weekt IT", "WI", "2017-12-01", "1", "2017-10-20", "2017-11-02", null, null, 1]:
+
+SQLSTATE[01000]: Warning: 1265 Data truncated for column 'ano' at row 1

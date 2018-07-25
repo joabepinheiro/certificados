@@ -1,0 +1,12 @@
+2017-10-24T14:57:33-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [2]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2017-10-24T14:58:27-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [2]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2017-10-24T14:59:02-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [1]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2017-10-24T15:14:01-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [2]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)

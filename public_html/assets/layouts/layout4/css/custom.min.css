@@ -1,0 +1,75 @@
+.table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    vertical-align: middle;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 4px 8px;
+}
+
+#menu-eleicao{
+    background: #e7ecf1;
+    border: 1px solid #e7ecf1;
+    padding: 10px;
+}
+
+.select2-container .select2-selection--single{
+  height: 34px;
+}
+
+.cancelado{
+    color: #ffffff;
+    background-color: #e7505a;
+    border-color: #e7505a;
+}
+
+.andamento{
+    color: #FFFFFF;
+    background-color: #525e64;
+    border-color: #525e64;
+}
+
+.pago{
+    color: #FFFFFF;
+    background-color: #9ec546;
+    border-color: #9ec546;
+}
+
+.label-com-hover{
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    width: 430px;
+    height: auto;
+    background: #9ec546;
+}
+
+.label-com-hover:hover{
+    background: #57721a;
+    color: #fff;
+}
+
+#adicionar-texto-padrao-frente:hover{
+    cursor: pointer;
+    color: #666;
+}
+
+table.dataTable.dtr-column>tbody>tr.parent td.control:before, table.dataTable.dtr-column>tbody>tr.parent th.control:before, table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before{
+    background-color: #70a6ab;
+    font-weight: 300;
+    vertical-align: middle;
+    border: 0;
+    border-radius: 0px !important;
+}
+
+table.dataTable.dtr-column>tbody>tr>td.control:before, table.dataTable.dtr-column>tbody>tr>th.control:before, table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+    box-shadow: none!important;
+    background-color: #b0c1d2;
+    font-weight: 300;
+    vertical-align: middle;
+    line-height: 16px;
+    border: 0;
+    border-radius: 0 !important;
+}

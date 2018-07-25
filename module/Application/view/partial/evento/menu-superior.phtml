@@ -1,0 +1,54 @@
+<?php
+/** @var  $evento \Application\Entity\Evento */
+$evento = $this->evento;
+?>
+
+<div class="btn-group">
+    <a class="btn  green btn-sm" href="javascript:;"
+       data-toggle="dropdown" data-hover="dropdown"
+       data-close-others="true"> Menu <i class="fa fa-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu pull-right">
+        <li>
+            <a href="<?php echo $this->url('participacao/default', array('action' => 'cadastrar', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-plus"></i> Participação
+            </a>
+        </li>
+
+        <li>
+            <a href="<?php echo $this->url('cadastrar-atividades-por-planilha', array('evento' => $evento->getId()))?>">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Atividades via planilha
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url('atividade/default', array('action' => 'cadastrar', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-keyboard-o" aria-hidden="true"></i>  Atividades via formulário
+            </a>
+        </li>
+
+        </li>
+        <li>
+            <a href="<?php echo $this->url('atividade/default', array('action' => 'listar', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-list" aria-hidden="true"></i>  Atividades
+            </a>
+        </li>
+
+        <li>
+            <a href="<?php echo $this->url('configurar-modelo-certificado/default', array('action' => 'cadastrar', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-certificate"></i> Cadastrar modelo de certificados
+            </a>
+        </li>
+
+        <li>
+            <a href="<?php echo $this->url('configurar-modelo-certificado/default', array('action' => 'listar', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-certificate"></i> Listar modelos de certificados
+            </a>
+        </li>
+
+        <li>
+            <a href="<?php echo $this->url('participacao/default', array('action' => 'enviar-certificados-por-email', 'evento' => $evento->getId()))?>">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar certificados por email
+            </a>
+        </li>
+    </ul>
+</div>

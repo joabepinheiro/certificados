@@ -1,0 +1,30 @@
+<?php
+/** @var  $element Zend\Form\Element\Text*/
+$element = $this->element;
+$col_1 = ($this->col_1) ? $this->col_1 : 'col-md-2';
+$col_2 = ($this->col_2) ? $this->col_2 : 'col-md-6';
+$edit = $this->edit;
+$search = $this->search;
+?>
+
+<div class="form-actions">
+	<div class="row">
+		<div class="<?php echo $col_1; ?>"></div>
+		<div class="<?php echo $col_2; ?>">
+			<button type="button"
+				class="btn <?php echo ($edit === true) ? ' yellow-saffron' : 'green'; echo $element->getAttribute('class')?> "
+				id="<?php echo $element->getAttribute('id')?>">
+                <?php if($edit === true): ?>
+                    <i class="fa fa-save"></i>  &nbsp; Salvar
+                <?php elseif ($search == true):?>
+                    <i class="fa fa-search"></i> &nbsp; Buscar
+                <?php else:?>
+                    <i class="fa fa-plus"></i> &nbsp; Adicionar
+                <?php endif;?>
+
+
+            </button>
+		</div>
+	</div>
+</div>
+

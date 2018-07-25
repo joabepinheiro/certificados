@@ -1,0 +1,157 @@
+<?php
+/** @var  $row \Application\Entity\ModeloCertificado */
+$row = $this->data;
+$modelos = $this->modelos;
+?>
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-certificate font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> MODELOS DE CERTIFICADO PARA EVENTO</span>
+            <span class="caption-helper"></span>
+        </div>
+        <div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+            <a class="btn  btn-icon-only btn-default fullscreen"
+               href="javascript:;" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body" style="height: auto;">
+
+
+        <?php echo $this->partial('evento/table/detalhes', array(
+            'evento' => $evento
+        ));?>
+
+        <?php echo $this->partial('partial/messages');?>
+
+        <?php if(count($modelos) == 0): ?>
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <td class="text-center">Nenhum modelo cadastrado</td>
+                    </tr>
+                </tbody>
+            </table>
+        <?php endif; ?>
+
+        <?php
+        foreach($modelos as $row): ?>
+            <div class="portlet light" style="border: 1px solid #ddd; background: #f5f5f5;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject bold uppercase font-red"> <span class="font-dark">Modelo:</span>  <?php echo $row->getNome()?></span>
+                    </div>
+                    <div class="actions">
+
+                        <a href="<?php  echo $this->url('configurar-modelo-certificado/default', array('action' => 'editar', 'evento' => $evento->getId(), 'id' => $row->getId()));?>"
+                           class="btn yellow-saffron" title="Editar modelo <?php echo $row->getNome(); ?>">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="<?php  echo $this->url('configurar-modelo-certificado/default',
+                            array('action' => 'deletar', 'evento' => $evento->getId(),
+                                'id' => $row->getId()));?>"
+                           class="btn red" title="Deletar modelo <?php echo $row->getNome(); ?>"
+                           onclick="return confirm('Confirmar exclusão de modelo <?php echo $row->getNome(); ?> ');">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body" style="height: auto;">
+
+                    <div class="portlet light" style="border: none; background: #f5f5f5; padding: 0; margin: 0;">
+                        <div class="portlet-title" style="margin: 0; min-height: 30px;">
+                            <div class="caption">
+                                <span class="caption-subject sbold">
+                                    <span class="font-blue-oleo" style="font-size: 14px; color: #333333; padding: 5px 20px;">Imagens de fundo</span>
+                                </span>
+                            </div>
+                            <div class="tools">
+                                <a href="" class="collapse" data-original-title="" title=""> </a>
+                                <a href="" class="fullscreen" data-original-title="" title=""> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body" style="height: auto;">
+                            <div  class="table-scrollable" style="margin-bottom: 50px !important;">
+                                <table class="table table-bordered table-hover" style="background: #f6f6f6;">
+                                    <thead>
+                                    <tr>
+                                        <th>Frente</th>
+                                        <th>Verso</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+
+                                        <td style="width: 50%">
+                                            <img src="/assets/certificados/frente/<?php echo $row->getBgFrente()?>" class="img-responsive"/>
+                                        </td>
+
+                                        <td style="width: 50%">
+                                            <?php if( $row->getBgVerso()): ?>
+                                                <img src="/assets/certificados/verso/<?php echo $row->getBgVerso()?>" class="img-responsive"/>
+                                            <?php else:?>
+                                                <div style="text-align: center;">Esse modelo não utiliza um verso</div>
+                                            <?php endif;?>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div  class="table-scrollable" style="margin-bottom: 50px !important;">
+                        <table class="table table-bordered table-hover" style="background: #f6f6f6;">
+                            <thead>
+                            <tr>
+                                <th>Tipos de atividades</th>
+                                <th>Funções</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            /** @var  $item \Application\Entity\CertificadoTipoFuncaoEvento */
+                            foreach ($row->getCertificadosTipoFuncaoEvento() as $item) :
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $item->getTipoAtividade(); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $item->getFuncao(); ?>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="clearfix">
+                                            <a href="<?php  echo $this->url('configurar-modelo-certificado/default',
+                                                array('action' => 'deletar-criterio', 'evento' => $evento->getId(), 'id' => $item->getId())
+                                            );?>"
+                                               class="btn btn-icon-only red"
+                                               title="Deletar critério (<?php echo $item->getTipoAtividade(); ?>/<?php echo $item->getFuncao(); ?>) do modelo <?php echo $item->getModeloCertificado()->getNome(); ?>"
+                                               onclick="return confirm('Confirmar exclusão de critério (<?php echo $item->getTipoAtividade(); ?>/<?php echo $item->getFuncao(); ?>) do modelo <?php echo $item->getModeloCertificado()->getNome(); ?> ?');">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach;?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+
+    </div>
+</div>

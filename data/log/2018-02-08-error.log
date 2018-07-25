@@ -1,0 +1,12 @@
+2018-02-08T21:21:00-03:00 CRIT (2):  Error Code: 1062 Menssage An exception occurred while executing 'INSERT INTO participante (CPF, nome_completo, data_nascimento, email, instituicao_ifba_vca) VALUES (?, ?, ?, ?, ?)' with params ["00796265569", "TESTE", "1984-06-10", "teste@gmail.com", "N\u00e3o"]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '00796265569' for key 'CPF'
+2018-02-08T22:14:06-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM modelo_certificado WHERE id = ?' with params [31]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`certificado_tipo_funcao_evento`, CONSTRAINT `certificado_tipo_funcao_evento_ibfk_4` FOREIGN KEY (`modelo_certificado_id`) REFERENCES `modelo_certificado` (`id`))
+2018-02-08T22:15:29-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM modelo_certificado WHERE id = ?' with params [29]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`certificado_tipo_funcao_evento`, CONSTRAINT `certificado_tipo_funcao_evento_ibfk_4` FOREIGN KEY (`modelo_certificado_id`) REFERENCES `modelo_certificado` (`id`))
+2018-02-08T22:57:40-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM tipo_atividade WHERE id = ?' with params [10]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `atividade_ibfk_2` FOREIGN KEY (`tipo_atividade_id`) REFERENCES `tipo_atividade` (`id`))

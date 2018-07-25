@@ -1,0 +1,71 @@
+<?php
+/** @var  $row \Application\Entity\Participacao */
+$data = $this->data;
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Participações</span>
+			<span class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a
+				href="<?php echo $this->url('aluno/default', array('action' => 'cadastrar'))?>"
+				class="btn green border-white sbold"> <i class="fa fa-plus"></i>
+				CADASTRAR ALUNO
+			</a> <a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <table class="table table-hover table-light" id="sample_1">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nome</th>
+					<th>Login</th>
+					<th>Telefone</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php foreach($data as $row): ?>
+                <tr>
+					<td><?php echo str_pad( $row->getId(), 4, '0', STR_PAD_LEFT ); ?></td>
+					<td><a
+						href="<?php echo $this->url('aluno/default', array('action' => 'detalhes', 'id' => $row->getId()))?>">
+                            <?php echo $row->getNome(); ?>
+                        </a></td>
+
+					<td><?php echo $row->getLogin(); ?></td>
+					<td>
+                        <?php echo $row->getTelefone1(); ?> <br />
+                        <?php echo $row->getTelefone2(); ?>
+                    </td>
+
+					<td style="text-align: right; width: 137px;">
+						<div class="clearfix">
+
+							<a
+								href="<?php  echo $this->url('aluno/default', array('action' => 'detalhes', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only blue-sharp" title="Detalhes"> <i
+								class="fa fa-info" aria-hidden="true"></i>
+							</a> <a
+								href="<?php  echo $this->url('aluno/default', array('action' => 'editar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+								class="fa fa-pencil" aria-hidden="true"></i>
+							</a>
+						</div>
+					</td>
+				</tr>
+            <?php endforeach; ?>
+        
+		
+		</table>
+	</div>
+</div>

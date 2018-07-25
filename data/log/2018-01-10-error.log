@@ -1,0 +1,12 @@
+2018-01-10T22:53:04-03:00 CRIT (2):  Error Code: 1364 Menssage An exception occurred while executing 'INSERT INTO funcao (nome) VALUES (?)' with params ["teste"]:
+
+SQLSTATE[HY000]: General error: 1364 Field 'atualizado_em' doesn't have a default value
+2018-01-10T23:00:39-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM evento WHERE id = ?' with params [7]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`atividade`, CONSTRAINT `fk_atividade_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2018-01-10T23:01:19-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM atividade WHERE id = ?' with params [41]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`participacao`, CONSTRAINT `fk_participacao_atividade1` FOREIGN KEY (`atividade_id`) REFERENCES `atividade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+2018-01-10T23:01:34-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM atividade WHERE id = ?' with params [41]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`participacao`, CONSTRAINT `fk_participacao_atividade1` FOREIGN KEY (`atividade_id`) REFERENCES `atividade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)

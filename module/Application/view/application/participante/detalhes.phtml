@@ -1,0 +1,74 @@
+<?php
+/** @var  $entity \Application\Entity\Participante */
+/** @var  $evento \Application\Entity\Evento */
+$entity = $this->entity;
+$container = new \Zend\Session\Container('logado');
+$usuario = $container->offsetGet('usuario');
+?>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-user font-green" aria-hidden="true"></i> <span
+						class="caption-subject font-green bold uppercase"> Participante: <span
+						class="font-dark"><?php echo $entity->getNomeCompleto(); ?></span>
+					</span>
+				</div>
+
+				<div class="actions">
+                    <?php if($usuario['is_administrador']):?>
+					<a
+						href="<?php  echo $this->url('participante/default', array('action' => 'editar', 'id' => $entity->getId()));?>"
+						class="btn  yellow-saffron" title="Editar"> <i
+						class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a>
+                    <?php endif;?>
+                    <a class="btn  btn-icon-only btn-default fullscreen"
+						href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light"
+							style="padding: 0 !important; margin-bottom: 0 !important;">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Nome</td>
+											<td> <?php echo $entity->getNomeCompleto(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Email</td>
+											<td> <?php echo $entity->getEmail(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">CPF</td>
+											<td> <?php echo $this->CPF($entity->getCpf()); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Data de nascimento</td>
+											<td> <?php echo $entity->getDataNascimento()->format('d/m/Y'); ?> </td>
+										</tr>
+
+										<tr>
+											<td class="sbold">Instituição</td>
+											<td>  <?php echo $entity->getInstituicao()?> </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row"></div>
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

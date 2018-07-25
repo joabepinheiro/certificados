@@ -1,0 +1,235 @@
+<?php
+/** @var  $row \Application\Entity\Participacao */
+/** @var  $evento \Application\Entity\Evento */
+$data = $this->data;
+$evento = $this->evento;
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Evento <b
+				class="font-dark"> <?php echo $evento->getNome(); ?></b></span> <span
+				class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a
+				href="<?php echo $this->url('participacao/default', array('action' => 'cadastrar', 'evento' => $evento->getId()))?>"
+				class="btn green border-white sbold"> <i class="fa fa-plus"></i>
+				CADASTRAR PARTICIPACAO
+			</a> <a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <table class="table table-hover table-light" id="sample_1">
+			<thead>
+				<tr>
+					<th>Atividade</th>
+					<th>Inicio</th>
+					<th>Fim</th>
+					<th>Função</th>
+					<th>Carga Horária</th>
+					<th>Nome</th>
+					<th>CPF</th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php foreach($data as $row): ?>
+                <tr>
+					<td><?php echo $row->getAtividade(); ?></td>
+					<td><?php echo $row->getAtividade()->getEvento()->getDataInicial()->format('d/m/Y'); ?></td>
+					<td><?php echo $row->getAtividade()->getEvento()->getDataFinal()->format('d/m/Y');; ?></td>
+					<td><?php echo $row->getFuncao(); ?></td>
+					<td><?php echo $row->getCargaHoraria(); ?></td>
+					<td><?php echo $row->getParticipante()->getNomeCompleto(); ?></td>
+					<td><?php echo $row->getParticipante()->getCpf(); ?></td>
+
+				</tr>
+            <?php endforeach; ?>
+        
+		
+		</table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+    <?php $this->headScript()->captureStart() ?>
+
+
+    function limparTabela(){
+        $('#tabela tbody').html('');
+    }
+
+    function loadTurma(curso_id){
+        limparTabela();
+        $.ajax({
+            url: '/notas/load-turmas/'+curso_id+'/',
+            type: 'POST',
+            beforeSend : function() {
+                //App.blockUI();
+            },
+            complete: function () {
+                //App.unblockUI();
+            },
+            success: function (data) {
+                var options = '<option value="">Todas as turmas</option>';
+                for (var x = 0; x < data.length; x++) {
+                    options += '<option value="' + data[x]['id'] + '">' + data[x]['descricao'] + '</option>';
+                }
+                $('#turma').html(options);
+                App.unblockUI();
+            },
+            error: function () {
+                alert('Ops algo deu errado, façaa uma nova busca')
+                App.unblockUI();
+            }
+        });
+    }
+    function loadDisciplina(curso_id){
+        limparTabela();
+        $.ajax({
+            url: '/notas/load-disciplinas/'+curso_id+'/',
+            type: 'POST',
+            beforeSend : function() {
+                App.blockUI();
+            },
+            complete: function () {
+                //App.unblockUI();
+            },
+            success: function (data) {
+                var options = '<option value=""></option>';
+                for (var x = 0; x < data.length; x++) {
+                    options += '<option value="' + data[x]['id'] + '">' + data[x]['nome'] + '</option>';
+                }
+                $('#disciplina').html(options);
+                //App.unblockUI();
+            },
+            error: function () {
+                alert('Ops algo deu errado, faça uma nova busca')
+                App.unblockUI();
+            }
+        });
+    }
+
+    function loadNotas(disciplina_has_curso_id, turma_id){
+        limparTabela();
+
+        var filter_situacao = '';
+
+        $('.situacao').each(function () {
+            if($(this).is(':checked')){
+                filter_situacao += $(this).val();
+            }
+        });
+
+        $("#hidden-curso").val($('#curso').val());
+        $("#hidden-disciplina").val($('#disciplina').val());
+        $("#hidden-situacoes").val(filter_situacao);
+
+        $.ajax({
+            url: '/notas/load-notas/',
+            type: 'GET',
+            data: {id: disciplina_has_curso_id, situacoes: filter_situacao, turma_id: turma_id },
+            beforeSend : function() {
+                App.blockUI();
+            },
+            complete: function () {
+                App.unblockUI();
+            },
+            success: function (data) {
+
+                var html = '';
+
+                if( data.length == 0){
+                    alert('Nenhuma existe nenhum registro de notas para essa busca');
+                }
+
+                for(var i = 0; i < data.length; i++){
+
+                    html +=
+                        '<tr class="Todos '+data[i].resultado+'">'+
+                        '<td>' + data[i].id + '</td>' +
+                        '<td>' + data[i].aluno_nome + '</td>' +
+                        '<td> ' +
+                        '<input type="hidden" class="id" name=\'id['+i+']\' value="'+data[i].id+'"/>' +
+
+                        '<input type="number" class="form-control text-center nota" name=\'nota['+i+']\' value="'+data[i].nota+'"  min="0" max="10"  step="0.1"/>' +
+                        '</td>'+
+                        '<td>' +
+                        '<select name="resultado['+i+']" class="select-resultado form-control" id="select-resultado-'+i+'">' +
+
+                        '<option value="Cursando">Cursando</option> ' +
+                        '<option value="Aprovado">Aprovado</option> ' +
+                        '<option value="Dependência">Dependência</option> ' +
+                        '<option value="Cursará">A cursar</option> ' +
+                        '<option value="Reprovado">Reprovado</option></select></td>' +
+                        '</tr>';
+                    $('#tabela tbody').html(html);
+                }
+
+                for(var i = 0; i < data.length; i++){
+                    $( "#select-resultado-"+i+" option[value="+data[i].resultado).attr('selected','selected');
+                }
+
+                App.unblockUI();
+            },
+            error: function () {
+                alert('Ops algo deu errado, faça uma nova busca');
+                App.unblockUI();
+            }
+        });
+    }
+
+    $('#curso').change(function(){
+
+        var curso_id = $('#curso').val();
+
+        loadDisciplina(curso_id);
+        loadTurma(curso_id);
+
+    });
+
+
+    $('#buscar').click(function(){
+
+
+        var disciplina = $('#disciplina').val();
+        var turma = $('#turma').val();
+        var curso = $('#curso').val();
+
+        var filter_situacao = '';
+
+        $('.situacao').each(function () {
+            if($(this).is(':checked')){
+                filter_situacao += $(this).val();
+            }
+        });
+
+        limparTabela();
+
+
+        if(!curso){
+            alert('Selecione o curso');
+        }else{
+            if(disciplina && filter_situacao){
+                loadNotas(disciplina, turma);
+            }else{
+                if(!disciplina){
+                    alert('Selecione a disciplina');
+                }else{
+                    alert('Selecione ao menos um tipo de situação');
+                }
+            }
+        }
+    });
+
+    <?php $this->headScript()->captureEnd() ?>
+
+</script>

@@ -1,0 +1,103 @@
+<?php
+/** @var  $evento \Application\Entity\Evento */
+/** @var  $row \Application\Entity\Participacao */
+$evento = $this->evento;
+$participacoes = $this->participacoes;
+
+?>
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+            <i class="fa fa-envelope-o font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Enviar certificados por email</span>
+            <span class="caption-helper"></span>
+		</div>
+
+		<div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+			<a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+
+        <?php echo $this->partial('evento/table/detalhes', array(
+                'evento' => $evento
+        ));?>
+
+        <?php echo $this->partial('partial/messages');?>
+
+		<table class="table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-inline collapsed"
+					id="tabela">
+					<thead>
+						<tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+							<th class="none">Email</th>
+							<th>Atividade</th>
+                            <th class="none">Função</th>
+							<th title="Enviado por email">Enviado em</th>
+							<th>Última emissão</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+                    <?php foreach($participacoes as $row):?>
+                        <tr class="participante">
+							<td><?php echo $row['participante_nome_completo']; ?></td>
+							<td><?php echo $this->CPF($row['participante_cpf']); ?></td>
+							<td><?php echo ($row['participante_email']) ? $row['participante_email'] : 'Não informado'; ?></td>
+                            <td title="<?php echo $row['atividade_tipo']; ?>"><?php echo $row['atividade_titulo']; ?></td>
+                            <td title="<?php echo $row['funcao_nome_funcao']; ?>"><?php echo $row['funcao_nome_funcao']; ?></td>
+							<td class="data"><?php echo (!is_null($row['email_enviado_em']))  ? $row['email_enviado_em']->format('d/m/Y h:i'): '<span class="text-danger">Não enviado</span>'; ?></td>
+							<td class="data"><?php echo (!is_null($row['data_ultima_emissao']))  ? $row['data_ultima_emissao']->format('d/m/Y h:i'): '<span class="text-danger">Não emitido</span>'; ?></td>
+							<td>
+                                <?php if(!empty($row['participante_email'])):?>
+                                    <a href="<?php echo
+                                    $this->url('participacao/default',
+                                        array('action' => 'enviar-certificado', 'evento' =>$evento->getId(), 'id' =>  $row['participacao_id']))?>"
+                                       class="btn btn-icon-only green" title="Enviar email"> <i
+                                                class="fa fa-send" aria-hidden="true"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="<?php echo $this->url('certificado/default', array('action' => 'preview', 'participacao' => $row['participacao_id']))?>" class="btn btn-icon-only green" title="Preview" target="_blank">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<?php echo $this->url('certificado/default', array('action' => 'download', 'participacao' => $row['participacao_id']))?>"
+                                   class="btn btn-icon-only green" title="Download"> <i
+                                            class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            </td>
+						</tr>
+                    <?php endforeach; ?>
+                    </tbody>
+				</table>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+<?php $this->headScript()->captureStart() ?>
+$(document).ready( function () {
+    $('#tabela').DataTable( {
+        "order": [[ 0, "asc" ]],
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+        }
+    });
+});
+
+<?php $this->headScript()->captureEnd() ?>
+
+</script>

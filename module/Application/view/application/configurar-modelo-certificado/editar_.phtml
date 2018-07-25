@@ -1,0 +1,455 @@
+<?php
+/** @var  $row \Application\Entity\ModeloCertificado */
+/** @var  $evento \Application\Entity\Evento */
+/** @var  $modelo \Application\Entity\ModeloCertificado */
+$form = $this->form;
+$evento = $this->evento;
+$modelo = $this->modelo;
+$modelos = $this->modelos;
+
+?>
+<style>
+    table span{
+        background: transparent;
+    }
+
+    table input[type=text]{
+        width: 230px;
+    }
+</style>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-certificate font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Editar modelo de certificado
+			</span> <span class="caption-helper"></span>
+        </div>
+        <div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+            <a class="btn  btn-icon-only btn-default fullscreen"
+               href="javascript:;" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body" style="height: auto;">
+
+        <?php echo $this->partial('evento/table/detalhes', array(
+            'evento' => $evento
+        ));?>
+
+        <?php echo $this->partial('partial/messages');?>
+        <!--<div>
+            <h2></h2>
+            <img id="certificado_frente_preview" src="#" alt="your image" style="width: 100%; height: auto;"/>
+        </div>-->
+
+        <table style="width: 100%; margin: 10px 0 40px 0;" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Tag</th>
+                <th></th>
+                <th>Descrição</th>
+                <th>Exemplo do valor retornado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[participante_nome]" readonly id="mt-target-1" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard"  data-clipboard-target="#mt-target-1">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o nome do participante</td>
+                <td>Ex: João da Silva</td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[participante_data_nascimento]" readonly id="mt-target-13" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-13">
+                        <i class="fa fa-copy" ></i>
+                    </a>
+                </td>
+                <td>Retona a data de nascimento do participante no formato
+                    dia/mês/ano</td>
+                <td>Ex: 12/08/1993</td>
+            </tr>
+
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[participante_cpf]" readonly id="mt-target-2" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-2">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o CPF do participante</td>
+                <td>Ex: 056.579.968-00</td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td colspan="3" style="padding: 10px;"></td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[participacao_carga_horaria]" readonly id="mt-target-3" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-3">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td title="Retorna a carga horária da participação">Retorna a carga horária da participação.</td>
+                <td>Ex: 4 horas</td>
+            </tr>
+
+
+
+
+            <tr>
+                <td colspan="3" style="padding: 10px;"></td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[evento_nome]" readonly id="mt-target-4" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-4">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o nome evento</td>
+                <td>Ex: Semana de Tecnologia da Informação Week-IT</td>
+            </tr>
+
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[evento_sigla]" readonly id="mt-target-5" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-5">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna a sigla evento</td>
+                <td>Ex: WeekIT</td>
+            </tr>
+
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[evento_ano]" readonly id="mt-target-6" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-6">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o ano do evento no formato YYYY</td>
+                <td>Ex: 2017</td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[evento_periodo]" readonly id="mt-target-7" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-7">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna um texto com o período do evento.</td>
+                <td>Ex: 25 de julho a 19 de dezembro de 2014</td>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="padding: 10px;"></td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[atividade_titulo]" readonly id="mt-target-8" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-8">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o nome da atividade</td>
+                <td>Ex: Netlogo: ambiente de simulação multiagente</td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[atividade_carga_horaria]" readonly id="mt-target-9" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-9">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna a carga horária da atividade</td>
+                <td>Ex: 4 horas</td>
+            </tr>
+
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[atividade_periodo]" readonly id="mt-target-10" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-10">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna um texto com o período da atividade.</td>
+                <td>Ex: 20 de agosto a 22 de agosto de 2017</td>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="padding: 10px;"></td>
+            </tr>
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[funcao_nome]" readonly id="mt-target-11" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" title="Clique aqui para copiar a tag" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-11">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna o nome da função.</td>
+                <td>Ex: bolsista</td>
+            </tr>
+            <tr class="mt-clipboard-container">
+                <td>
+                    <input type="text" value="[participacao_qtd_bolsita]" readonly id="mt-target-12" class="form-control">
+                </td>
+                <td>
+                    <a href="javascript:;" class="btn blue-steel mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-12">
+                        <i class="fa fa-copy" title="Clique aqui para copiar a tag"></i>
+                    </a>
+                </td>
+                <td>Retorna a quantidade de bolsistas.</td>
+                <td>Ex: 10</td>
+            </tr>
+        </table>
+
+        <?php $form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $form->prepare(); ?>
+
+        <?php echo $this->form()->openTag($form); ?>
+
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/hidden', array(
+            'element' => $form->get('id')
+        ));
+        ?>
+
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/hidden', array(
+            'element' => $form->get('evento')
+        ));
+        ?>
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/text', array(
+            'element' => $form->get('nome'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/textarea', array(
+            'element' => $form->get('texto'),
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-dark sbold uppercase"> Critérios do modelo do certificado</span>
+                </div>
+                <div class="actions">
+                    <button class="btn  btn-sm green add-criterio" type="button" title="adicionar novo critério">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body" style="height: auto;">
+
+                <div class="note note-info">
+                    <p>Os critérios dos certificados indicam quais funções e atividades estão relacionadas ao modelo de certificado a ser cadastrado </p>
+                </div>
+
+                <table class="table table-bordered table-hover" id="tabela-criterios">
+                    <thead>
+                    <tr>
+                        <td>Tipos de atividades</td>
+                        <td>Funções</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    /** @var  $item \Application\Entity\CertificadoTipoFuncao */
+                    foreach ($modelo->getCertificadoTipoFuncao() as $item): ?>
+                    <tr class="opcao-criterio">
+                        <td>
+                            <?php
+                            /** @var  $element_tipos_atividade Zend\Form\Element\Select */
+                            $element_tipos_atividade = $form->get('tiposAtividade[]');
+                            $element_tipos_atividade = $element_tipos_atividade->setValue(
+                                $item->getTipoAtividade()->getId()
+                            );
+                            $element_tipos_atividade->setAttribute('class', 'form-control ' .  $element_tipos_atividade->getAttribute('class'));
+                            echo $this->formElement($element_tipos_atividade);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            /** @var  $element_funcoes Zend\Form\Element\Select */
+                            $element_funcoes = $form->get('funcoes[]');
+                            $element_funcoes = $element_funcoes->setValue(
+                                $item->getFuncao()->getId()
+                            );
+                            $element_funcoes->setAttribute('class', 'form-control ' .  $element_funcoes->getAttribute('class'));
+                            echo $this->formElement($element_funcoes);
+                            ?>
+
+                        </td>
+                        <td style="text-align: center;">
+
+                            <button class="btn  btn-sm red remove-criterio" type="button" title="Remover criério do modelo">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <?php
+        /** @var  $modelo_certificado_frente \Zend\Form\Element\File */
+        $modelo_certificado_frente = $form->get('modelo_certificado_frente');
+        $modelo_certificado_frente->setAttribute('description', 'Mantenha o campo em branco para manter a antiga imagem');
+        $modelo_certificado_frente->setAttribute('required', '');
+        echo $this->partial('partial/form/general/quick/element/file', array(
+            'element' => $modelo_certificado_frente,
+            'col_1' => 'col-md-2',
+            'col_2' => 'col-md-9'
+        ));
+        ?>
+
+
+        <?php
+        echo $this->partial('partial/form/general/quick/element/submit', array(
+            'element' => $form->get('submit'),
+            'edit' => true
+        ));
+        ?>
+
+        <?php echo $this->form()->closeTag($form); ?>
+
+        <div style="display: block; margin: 20px auto; width: 50%">
+                <h4>Imagem da frente</h4>
+                <img src="/assets/certificados/frente/<?php echo $modelo->getBgFrente(); ?>" style="width: 100%; height: auto; margin: 10px auto;"/>
+        </div>
+
+    </div>
+</div>
+
+
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+
+    <?php $this->headScript()->captureStart() ?>
+
+    var criterio = $( ".opcao-criterio" ).clone();
+
+    $( ".add-criterio" ).on( "click", function() {
+        criterio.clone().prependTo( "#tabela-criterios tbody" );
+    });
+
+    $(document).on("click", ".remove-criterio" , function() {
+        $(this).parent().parent().remove();
+        validarCriteriosDoCertificado();
+    });
+
+    $(document).ready(function() {
+
+        $( "#tabela-criterios select" ).change(function(e) {
+            validarCriteriosDoCertificado();
+        });
+
+        $( "form" ).submit(function(e) {
+            var valid  = validarCriteriosDoCertificado();
+            if(!valid){
+                e.preventDefault();
+            }
+        });
+
+        $('#summernote').summernote({
+            codemirror: { // codemirror options
+                theme: 'monokai'
+            }
+        });
+
+
+    });
+
+    /**
+     * Verifica se existem criterios repetidos
+     */
+    function validarCriteriosDoCertificado() {
+        var tabela_criterios    = $( "#tabela-criterios");
+        var tiposAtividade   = $("#tabela-criterios .tiposAtividade");
+        var funcoes          = $("#tabela-criterios .funcoes");
+
+        tabela_criterios.find('tr').css('background', '#fff');
+        for(var i = 0; i < tiposAtividade.length; i++){
+
+            for(var j = 0; j < tiposAtividade.length; j++){
+                if(j !== i){
+                    if(
+                        tiposAtividade[i].value === tiposAtividade[j].value
+                        && funcoes[i].value === funcoes[j].value
+                    ){
+                        tabela_criterios.find('tr:eq('+ (i+1)+')').css('background', '#FCD8C0');
+                        tabela_criterios.find('tr:eq('+ (j+1)+')').css('background', '#FCD8C0');
+                        alert('As linhas destacadas em "Críterios do modelo do certificado" se repetem, remova ou altere um dos critérios destacados');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+
+    <?php $this->headScript()->captureEnd() ?>
+</script>

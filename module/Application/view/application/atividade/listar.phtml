@@ -1,0 +1,82 @@
+<?php
+/** @var  $row \Application\Entity\Atividade */
+/** @var  $evento \Application\Entity\Evento */
+$data = $this->data;
+$evento = $this->evento;
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+            <span class="caption-subject font-green bold uppercase"> Atividades</span>
+            <span class="caption-helper"></span>
+		</div>
+        <div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+            <a class="btn  btn-icon-only btn-default fullscreen"
+               href="javascript:;" data-original-title="" title=""> </a>
+        </div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <?php echo $this->partial('evento/table/detalhes', array(
+            'evento' => $evento
+        ));?>
+
+        <table class="table table-striped table-bordered table-hover" width="100%" id="tabela">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Tipo</th>
+					<th>Carga horária</th>
+					<th>Início</th>
+					<th>Fim</th>
+					<th style="min-width: 140px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php foreach($data as $row): ?>
+                <tr>
+					<td><?php echo $row->getTitulo(); ?></td>
+					<td><?php echo $row->getTipoAtividade()->getNome(); ?></td>
+					<td><?php echo $row->getCargaHoraria(); ?></td>
+					<td><?php echo $row->getDataInicio()->format('d/m/Y'); ?></td>
+					<td><?php echo $row->getDataFim()->format('d/m/Y'); ?></td>
+
+					<td style="text-align: right; width: 100px;">
+						<div class="clearfix">
+
+                            <a
+								href="<?php  echo $this->url('atividade/default', array('action' => 'editar', 'evento' => $evento->getId(), 'id' => $row->getId()));?>"
+								class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+								class="fa fa-pencil" aria-hidden="true"></i>
+							</a> <a
+								href="<?php  echo $this->url('atividade/default', array('action' => 'deletar', 'evento' => $evento->getId(), 'id' => $row->getId()));?>"
+								class="btn btn-icon-only red" title="Deletar atividade"
+								onclick="return confirm('Confirmar exclusão de atividade ?');">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</a>
+						</div>
+					</td>
+				</tr>
+            <?php endforeach; ?>
+		</table>
+	</div>
+</div>
+
+<?php $this->headScript()->captureStart() ?>
+    $(document).ready( function () {
+        $('#tabela').DataTable( {
+            "order": [[ 0, "asc" ]],
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            }
+        });
+     });
+<?php $this->headScript()->captureEnd() ?>

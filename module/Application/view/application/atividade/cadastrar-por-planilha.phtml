@@ -1,0 +1,161 @@
+
+<?php
+/** @var  $row \Application\Entity\Atividade */
+$evento = $this->evento;
+$atividades = $this->atividades;
+?>
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+
+			<i class="fa fa-plus font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Cadastrar
+				atividades do evento por planilha</span> <span
+				class="caption-helper"> </span>
+		</div>
+		<div class="actions">
+            <?php echo $this->partial('evento/menu/superior', array(
+                'evento' => $evento
+            ));?>
+			<a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+
+	<div class="portlet-body">
+        <?php echo $this->partial('evento/table/detalhes', array(
+            'evento' => $evento
+        ));?>
+		<div class="note note-info">
+			<h4 class="block">Atenção</h4>
+			<p>É obrigatório informar os seguintes campos: Nome da atividade,
+				Carga horária, Tipo, Data início, Data fim e Tipo. Na ausência de um
+				desses campos o cadastro das atividades não será realizado.</p>
+			<p>
+				<br /> No campo tipo os valores possíveis são: <br />
+			
+			
+			<ul style="margin-top: 10px;">
+                    <?php foreach ($tipos_atividades as $tipo_atividade):?>
+                        <li><?php echo $tipo_atividade; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+			</p>
+		</div>
+
+		<div style="padding: 0 0 30px 0;">
+			<a
+				href="<?php echo $this->url('publico/default', array('action' => 'download-cadastrar-atividades-do-evento-por-planilha'));?>"
+				class="btn btn blue" id="blockui_sample_1_3"> <i
+				class="fa fa-download"></i> Baixar planilha de exemplo
+			</a>
+		</div>
+
+        <?php echo $this->partial('partial/messages');?>
+
+
+        <?php
+        if ($this->formElementErrors($form->get('planilha')))
+            echo $this->formElementErrors()
+                ->setMessageOpenFormat('<div class="note note-danger" style="margin-bottom: 10px">')
+                ->setMessageSeparatorString('</div><div class="note note-danger" style="margin-bottom: 10px">')
+                ->setMessageCloseString('</div>')
+                ->render($form->get('planilha'));
+        ?>
+
+        <div class="portlet light bordered "
+			style="background: #f5f5f5;">
+			<div class="portlet-body">
+                <?php $form = $this->form; ?>
+                <?php $form->prepare(); ?>
+                <?php echo $this->form()->openTag($form); ?>
+                <?php echo $this->formElement($form->get('evento')); ?>
+                <div class="form-group">
+					<label class="sr-only" for="exampleInputEmail2">Email address</label>
+                    <?php echo $this->formElement($form->get('planilha')); ?>
+                </div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<div class="row">
+			<div class="col-md-12">
+				<button type="submit" class="btn btn green-jungle pull-right"
+					id="blockui_sample_1_3">
+					<i class="fa fa-send-o "></i> Enviar planilha
+				</button>
+			</div>
+		</div>
+	</div>
+    <?php echo $this->form()->closeTag($form); ?>
+    </div>
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Atividades: <span
+				class="font-dark"><?php echo $evento->getNome();  ?></span></span> <span
+				class="caption-helper"></span>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+            <?php echo $this->partial('partial/messages');?>
+
+            <table class="table table-hover table-light" id="tabela">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th title="Caarga horária">C.H</th>
+					<th>Tipo</th>
+					<th>Início</th>
+					<th>Fim</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+                <?php foreach($atividades as $row): ?>
+                    <tr>
+					<td><?php echo $row->getTitulo(); ?></td>
+					<td><?php echo $row->getCargaHoraria(); ?></td>
+					<td><?php echo $row->getTipoAtividade(); ?></td>
+					<td><?php echo $row->getDataInicio()->format('d/m/y'); ?></td>
+					<td><?php echo $row->getDataFim()->format('d/m/y'); ?></td>
+
+                        <td style="text-align: right; width: 100px;">
+                            <div class="clearfix">
+                                <a href="<?php  echo $this->url('atividade/default', array('action' => 'editar', 'evento' => $evento->getId(), 'id' => $row->getId()));?>"
+                                        class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+                                            class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                                <a href="<?php  echo $this->url('atividade/default', array('action' => 'deletar', 'evento' => $evento->getId(), 'id' => $row->getId()));?>"
+                                        class="btn btn-icon-only red" title="Deletar atividade"
+                                        onclick="return confirm('Confirmar exclusão de atividade ?');">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </td>
+				</tr>
+                <?php endforeach; ?>
+            
+		
+		</table>
+	</div>
+</div>
+
+
+<?php $this->headScript()->captureStart() ?>
+$(document).ready( function () {
+$('#tabela').DataTable( {
+"order": [[ 0, "asc" ]],
+"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+"language": {
+"url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+}
+});
+});
+<?php $this->headScript()->captureEnd() ?>
+
+

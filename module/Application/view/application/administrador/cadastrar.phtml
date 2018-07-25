@@ -1,0 +1,45 @@
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-users font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Cadastrar
+				administrador</span> <span class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+        <?php
+        echo $this->partial('partial/form/general/quick', array(
+            'form' => $form
+        ));
+        ?>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+<?php $this->headScript()->captureStart() ?>
+    $(document).ready(function() {
+        $("#tipo").change(function(){
+            if($(this).val() === 'fisica'){
+                $('.label_numero_documento').html('CPF <span class="required" aria-required="true"> * </span>');
+                $("#numero_documento").inputmask({
+                    "mask": "999.999.999-99",
+                });
+            }else{
+                if($(this).val() === 'juridica'){
+                    $('.label_numero_documento').html('CNPJ <span class="required" aria-required="true"> * </span>');
+                    $("#numero_documento").inputmask({
+                        "mask": "99.999.999/9999-99",
+                    });
+                }
+            }
+        });
+    });
+<?php $this->headScript()->captureEnd() ?>
+</script>

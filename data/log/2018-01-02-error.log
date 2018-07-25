@@ -1,0 +1,9 @@
+2018-01-02T17:47:38-03:00 CRIT (2):  Error Code: 1048 Menssage An exception occurred while executing 'INSERT INTO modelo_certificado (nome, texto, descricao, estilo_container_texto, bg_frente, bg_verso, tipo, cadastrado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)' with params ["TRI", "<p>GLTL<\/p>", null, null, {"name":"Modelo-WeekIT2017.png","type":"image\/png","tmp_name":"C:\\wamp64\\tmp\\php6581.tmp","error":0,"size":422438}, null, "frente", null, null]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'cadastrado_em' cannot be null
+2018-01-02T17:47:58-03:00 CRIT (2):  Error Code: 1048 Menssage An exception occurred while executing 'INSERT INTO modelo_certificado (nome, texto, descricao, estilo_container_texto, bg_frente, bg_verso, tipo, cadastrado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)' with params ["TRI", "<p>GLTL<\/p>", null, null, {"name":"Modelo-WeekIT2017.png","type":"image\/png","tmp_name":"C:\\wamp64\\tmp\\phpB5C5.tmp","error":0,"size":422438}, null, "frente", null, null]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'cadastrado_em' cannot be null
+2018-01-02T17:48:18-03:00 CRIT (2):  Error Code: 1364 Menssage An exception occurred while executing 'INSERT INTO modelo_certificado (nome, texto, descricao, estilo_container_texto, bg_frente, bg_verso, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)' with params ["TRI", "<p>GLTL<\/p>", null, null, {"name":"Modelo-WeekIT2017.png","type":"image\/png","tmp_name":"C:\\wamp64\\tmp\\php6C4.tmp","error":0,"size":422438}, null, "frente"]:
+
+SQLSTATE[HY000]: General error: 1364 Field 'cadastrado_em' doesn't have a default value

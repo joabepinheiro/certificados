@@ -1,0 +1,66 @@
+<?php
+/** @var  $row \Application\Entity\Evento */
+$data = $this->data;
+$container = new \Zend\Session\Container('logado');
+$usuario = $container->offsetGet('usuario');
+?>
+
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-calendar font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Meus Eventos</span> <span
+				class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+        <?php echo $this->partial('partial/messages');?>
+
+        <table class="table table-hover table-light" id="sample_1">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Sigla</th>
+					<th>Ano</th>
+					<th>Início</th>
+					<th>Fim</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php foreach($data as $row): ?>
+                <tr>
+					<td><?php echo $row->getNome(); ?></td>
+					<td><?php echo $row->getSigla(); ?></td>
+					<td><?php echo $row->getAno(); ?></td>
+					<td><?php echo $row->getDataInicial()->format('d/m/Y'); ?></td>
+					<td><?php echo $row->getDataFinal()->format('d/m/Y'); ?></td>
+
+					<td style="text-align: right;">
+						<div class="clearfix">
+
+                            <a
+                                    href="<?php  echo $this->url('participacao/default', array('action' => 'cadastrar', 'evento' => $row->getId()));?>"
+                                    class="btn btn-icon-only green-meadow"
+                                    title="Cadastrar participação no evento"> <i class="fa fa-plus"
+                                                                                 aria-hidden="true"></i>
+                            </a><a
+                                    href="<?php  echo $this->url('configurar-modelo-certificado/default', array('action' => 'cadastrar', 'evento' => $row->getId()));?>"
+                                    class="btn btn-icon-only green"
+                                    title="Modelo de certificado para <?php echo $row->getNome();?>">
+                                <i class="fa fa-certificate" aria-hidden="true"></i>
+                            </a>
+						</div>
+					</td>
+				</tr>
+            <?php endforeach; ?>
+        
+		
+		</table>
+	</div>
+</div>

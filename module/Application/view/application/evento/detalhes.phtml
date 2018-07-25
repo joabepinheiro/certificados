@@ -1,0 +1,76 @@
+<?php
+/** @var  $entity \Application\Entity\Evento */
+$entity = $this->entity;
+?>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-calendar font-green" aria-hidden="true"></i> <span
+						class="caption-subject font-green bold uppercase"> Detalhes: <span
+						class="font-dark"><?php echo $entity->getNome(); ?></span>
+					</span>
+				</div>
+
+				<div class="actions">
+					<a
+						href="<?php  echo $this->url('evento/default', array('action' => 'editar', 'id' => $entity->getId()));?>"
+						class="btn  yellow-saffron" title="Editar"> <i
+						class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a> <a class="btn  btn-icon-only btn-default fullscreen"
+						href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light"
+							style="padding: 0 !important; margin-bottom: 0 !important;">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Nome</td>
+											<td> <?php echo $entity->getNome(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Sigla</td>
+											<td> <?php echo $entity->getSigla(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Edição</td>
+											<td> <?php echo $entity->getNumeroEdicao(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Ano</td>
+											<td> <?php echo $entity->getAno(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Início</td>
+											<td> <?php echo $entity->getDataInicial()->format('d/m/Y'); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Fim</td>
+											<td> <?php echo $entity->getDataFinal()->format('d/m/Y'); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Coordenador</td>
+											<td> <?php echo $entity->getUsuario()->getLogin(); ?> </td>
+										</tr>
+										<tr>
+									
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row"></div>
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

@@ -1,0 +1,59 @@
+<?php
+/** @var  $entity \Application\Entity\TipoAtividade */
+$entity = $this->entity;
+?>
+
+
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- Begin: life time stats -->
+		<div class="portlet light">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-graduation-cap font-green" aria-hidden="true"></i>
+					<span class="caption-subject font-green bold uppercase"> Atividade
+					</span>
+				</div>
+
+				<div class="actions">
+					<a
+						href="<?php  echo $this->url('atividade/default', array('action' => 'editar', 'id' => $entity->getId()));?>"
+						class="btn  yellow-saffron" title="Editar"> <i
+						class="fa fa-pencil" aria-hidden="true"></i> Editar
+					</a> <a class="btn  btn-icon-only btn-default fullscreen"
+						href="javascript:;" data-original-title="" title=""> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light"
+							style="padding: 0 !important; margin-bottom: 0 !important;">
+							<div class="portlet-body">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="sbold">Evento</td>
+											<td> <?php echo $entity->getEvento(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Título</td>
+											<td> <?php echo $entity->getTitulo(); ?> </td>
+										</tr>
+										<tr>
+											<td class="sbold">Tipo</td>
+											<td> <?php echo $entity->getTipoAtividade()->getNome(); ?> </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- End: life time stats -->
+	</div>
+</div>

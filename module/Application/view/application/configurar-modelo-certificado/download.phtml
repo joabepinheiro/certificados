@@ -1,0 +1,56 @@
+
+<?php
+$data = $this->data;
+
+?>
+
+
+<style>
+@page {
+	width: 297mm;
+	height: 210mm;
+	margin-top: 0 margin-bottom:0;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
+	font-size: 10pt;
+	position: relative;
+}
+
+#page-body {
+	margin: auto;
+}
+
+#overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-image: url('/assets/certificados/<?php  echo $data[' id ']; ?>.png');
+	background-position: center top;
+	background-repeat: no-repeat;
+	z-index: -1;
+}
+
+#content {
+	width: 247mm;
+	height: 210mm;
+	padding: 8.5cm 2.50cm 5.00cm 2.50cm;
+	margin: auto;
+	font-size: 14pt;
+}
+</style>
+
+<body>
+	<div id="page-body">
+		<div id="overlay"></div>
+		<div id="content" style="line-height: 1.6em; text-align: justify;">
+        <?php echo $data['texto']; ?>
+    </div>
+	</div>
+</body>

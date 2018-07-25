@@ -1,0 +1,9 @@
+2018-01-13T10:20:02-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM modelo_certificado WHERE id = ?' with params [7]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`certificado_tipo_funcao_evento`, CONSTRAINT `fk_certificado_tipo_funcao_modelo_certificado1` FOREIGN KEY (`modelo_certificado_id`) REFERENCES `modelo_certificado` (`id`) ON DEL)
+2018-01-13T10:21:39-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM modelo_certificado WHERE id = ?' with params [7]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`certificado_tipo_funcao_evento`, CONSTRAINT `fk_certificado_tipo_funcao_modelo_certificado1` FOREIGN KEY (`modelo_certificado_id`) REFERENCES `modelo_certificado` (`id`) ON DEL)
+2018-01-13T10:26:53-03:00 CRIT (2):  Error Code: 1451 Menssage An exception occurred while executing 'DELETE FROM modelo_certificado WHERE id = ?' with params [7]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`certificados`.`certificado_tipo_funcao_evento`, CONSTRAINT `fk_certificado_tipo_funcao_modelo_certificado1` FOREIGN KEY (`modelo_certificado_id`) REFERENCES `modelo_certificado` (`id`) ON DEL)

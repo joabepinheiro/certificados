@@ -1,0 +1,3 @@
+2017-12-24T10:08:57-03:00 CRIT (2):  Error Code: 1062 Menssage An exception occurred while executing 'INSERT INTO participante (CPF, nome_completo, data_nascimento, email, instituicao) VALUES (?, ?, ?, ?, ?)' with params ["06261455546", "Giltean Tavares Pires", "1995-10-28", "giltean@gmail.com", ""]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '06261455546' for key 'CPF_UNIQUE'

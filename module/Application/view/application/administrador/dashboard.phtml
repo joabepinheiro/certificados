@@ -1,0 +1,140 @@
+<?php $data = $this->data;?>
+
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue">
+			<div class="visual">
+				<i class="fa fa-graduation-cap"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					<span data-counter="counterup"
+						data-value="<?php echo $data['total_participantes']; ?>">
+                        <?php echo $data['total_participantes']; ?>
+                    </span>
+				</div>
+				<div class="desc">Participantes</div>
+			</div>
+			<a class="more"
+				href="<?php  echo $this->url('participante/default', array('action' => 'listar'));?>">
+				Ver mais <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red">
+			<div class="visual">
+				<i class="fa fa-users"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					<span data-counter="counterup"
+						data-value="<?php echo $data['total_de_funcoes']; ?>">
+                    <?php echo $data['total_de_funcoes']; ?>
+                
+				
+				</div>
+				<div class="desc">Funções</div>
+			</div>
+			<a class="more"
+				href="<?php  echo $this->url('funcao/default', array('action' => 'listar'));?>">
+				Ver mais <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-jungle">
+			<div class="visual">
+				<i class="fa fa fa-book"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					<span data-counter="counterup"
+						data-value="<?php echo $data['total_de_usuarios']; ?>"><?php echo $data['total_de_usuarios']; ?></span>
+				</div>
+				<div class="desc">Usuários</div>
+			</div>
+			<a class="more"
+				href="<?php  echo $this->url('usuario/default', array('action' => 'listar'));?>">
+				Ver mais <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat yellow-lemon">
+			<div class="visual">
+				<i class="fa fa-globe"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					<span data-counter="counterup"
+						data-value="<?php echo $data['total_de_eventos']; ?>">
+                    <?php echo $data['total_de_eventos']; ?>
+                
+				
+				</div>
+				<div class="desc">Eventos</div>
+			</div>
+			<a class="more"
+				href="<?php  echo $this->url('evento/default', array('action' => 'listar'));?>">
+				Ver mais <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="portlet light">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-calendar font-green" aria-hidden="true"></i> <span
+				class="caption-subject font-green bold uppercase"> Últimos eventos</span>
+			<span class="caption-helper"></span>
+		</div>
+		<div class="actions">
+			<a
+				href="<?php echo $this->url('evento/default', array('action' => 'cadastrar'))?>"
+				class="btn green border-white"> <i class="fa fa-plus"></i> ADICIONAR
+				EVENTO
+			</a> <a class="btn  btn-icon-only btn-default fullscreen"
+				href="javascript:;" data-original-title="" title=""> </a>
+		</div>
+	</div>
+	<div class="portlet-body" style="height: auto;">
+            <?php echo $this->partial('partial/messages');?>
+
+            <table class="table table-hover table-light" id="sample_1">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Ano</th>
+					<th>Sigla</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+                <?php /** @var $row  \Application\Entity\Evento*/ ?>
+                <?php foreach($data['eventos'] as $row): ?>
+                    <tr>
+					<td><?php echo $row->getNome(); ?></td>
+					<td><?php echo $row->getAno(); ?></td>
+					<td><?php echo $row->getSigla(); ?></td>
+					<td style="text-align: right;">
+						<div class="clearfix">
+							<a
+								href="<?php  echo $this->url('evento/default', array('action' => 'detalhes', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only blue-sharp" title="Detalhes"> <i
+								class="fa fa-info" aria-hidden="true"></i>
+							</a> <a
+								href="<?php  echo $this->url('evento/default', array('action' => 'editar', 'id' => $row->getId()));?>"
+								class="btn btn-icon-only yellow-saffron" title="Editar"> <i
+								class="fa fa-pencil" aria-hidden="true"></i>
+							</a>
+						</div>
+					</td>
+				</tr>
+                <?php endforeach; ?>
+            
+		
+		</table>
+	</div>
+</div>
